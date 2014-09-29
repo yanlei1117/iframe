@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+		<!-- 配置logback日志 
+			参数：logBackXmlPath logback的xml配置文件位置
+			      includeLogBackXmlPaths：logback xml配置文件中可以include其它logback 配置.本程序中不需要在logBackXmlPath对应的xml中include配置文件，而是通过这个参数指定
+			                              一个或多个include xml文件，在初始化方法configLogBack会将这些include文件加入配置文件，以达到自动加载多个include文件的功能。
+			
+			格式：被引用(include)的xml格式
+<included>
+  <appender name="includedConsole" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>"%d - %m%n"</pattern>
+    </encoder>
+  </appender>
+</included>
+		-->
+		<bean name="logConfiguration" class="com.asiainfo.dbx.ln.component.log.impl.LogBackConfiguration" >
+			<property name="logBackXmlPath" value="classpath*:config/log/logback.xml"/>
+			<property name="includeLogBackXmlPaths" value="classpath*:config/log/logbackInclude*.xml"/>
+			<property name="charset" value="UTF-8"/>
+		</bean>
+</beans>

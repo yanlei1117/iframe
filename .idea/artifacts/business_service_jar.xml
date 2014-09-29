@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="business.service:jar">
+    <output-path>$PROJECT_DIR$/deploy/lib</output-path>
+    <root id="archive" name="business.service.jar">
+      <element id="module-output" name="business.service" />
+    </root>
+  </artifact>
+</component>

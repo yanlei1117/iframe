@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+        <bean name="procedureXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.base.ProcedureRunnerXmlParser"></bean>
+        <bean name="caseRunnerXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.base.CaseRunnerXmlParser"></bean>
+        <bean name="defineRunnerXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.base.DefineRunnerXmlParser"></bean>
+        <bean name="elseRunnerXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.base.ElseRunnerXmlParser"></bean>
+        <bean name="forEachRunnerXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.base.ForEachRunnerXmlParser"></bean>
+        <bean name="logicFalseRunnerXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.base.LogicFalseRunnerXmlParser"></bean>
+        <bean name="logicTrueRunnerXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.base.LogicTrueRunnerXmlParser"></bean>
+        <bean name="whenRunnerXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.base.WhenRunnerXmlParser"></bean>
+
+
+
+        <bean name="dasCreateRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.das.DasCreateRunnerXmlParser"></bean>
+        <bean name="dasReadRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.das.DasReadRunnerXmlParser"></bean>
+        <bean name="dasUpdateRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.das.DasUpdateRunnerXmlParser"></bean>
+        <bean name="dasDeleteRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.das.DasDeleteRunnerXmlParser"></bean>
+        <bean name="dasCountRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.das.DasCountRunnerXmlParser"></bean>
+
+
+        <bean name="ftpListFileRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpListFileXmlParser"></bean>
+        <bean name="ftpGetFileRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpGetFileXmlParser"></bean>
+        <bean name="ftpGetAllFileRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpGetAllFileXmlParser"></bean>
+        <bean name="ftpPutFileRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpPutFileXmlParser"></bean>
+        <bean name="ftpPutAllFileRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpPutAllFileXmlParser"></bean>
+        <bean name="ftpRenameFileRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpRenameFileXmlParser"></bean>
+        <bean name="ftpRenameAllFileRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpRenameAllFileXmlParser"></bean>
+        <bean name="ftpMoveFileRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpMoveFileXmlParser"></bean>
+        <bean name="ftpMoveAllFileRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpMoveAllFileXmlParser"></bean>
+        <bean name="ftpMoveDirRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpMoveDirXmlParser"></bean>
+        <bean name="ftpDeleteFileRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpDeleteFileXmlParser"></bean>
+        <bean name="ftpDeleteAllFileRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpDeleteAllFileXmlParser"></bean>
+        <bean name="ftpDeleteDirRunner" class="com.asiainfo.dbx.ln.business.runner.parser.xml.ftp.FtpDeleteDirXmlParser"></bean>
+
+        <bean name="direDeleteXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.file.DirDeleteXmlParser"/>
+        <bean name="direMoveXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.file.DirMoveXmlParser"/>
+        <bean name="direRenameXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.file.DirRenameXmlParser"/>
+        <bean name="direZipXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.file.DirZipXmlParser"/>
+        <bean name="fileDeleteXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.file.FileDeleteXmlParser"/>
+        <bean name="fileListXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.file.FileListXmlParser"/>
+        <bean name="fileMoveXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.file.FileMoveXmlParser"/>
+        <bean name="fileRenameXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.file.FileRenameXmlParser"/>
+        <bean name="fileUnZipXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.file.FileUnZipXmlParser"/>
+        <bean name="fileZipXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.file.FileZipXmlParser"/>
+
+
+
+
+        <bean name="runnerXmlParser" class="com.asiainfo.dbx.ln.business.runner.parser.xml.DefaultRunnerXmlParser">
+            <property name="xmlParserList">
+                <list>
+                    <ref bean="procedureXmlParser"/>
+                    <ref bean="caseRunnerXmlParser"/>
+                    <ref bean="defineRunnerXmlParser"/>
+                    <ref bean="elseRunnerXmlParser"/>
+                    <ref bean="forEachRunnerXmlParser"/>
+                    <ref bean="logicFalseRunnerXmlParser"/>
+                    <ref bean="logicTrueRunnerXmlParser"/>
+                    <ref bean="whenRunnerXmlParser"/>
+
+                    <ref bean="dasCreateRunner"/>
+                    <ref bean="dasReadRunner"/>
+                    <ref bean="dasUpdateRunner"/>
+                    <ref bean="dasDeleteRunner"/>
+
+                    <ref bean="ftpListFileRunner"/>
+                    <ref bean="ftpGetFileRunner"/>
+                    <ref bean="ftpGetAllFileRunner"/>
+                    <ref bean="ftpPutFileRunner"/>
+                    <ref bean="ftpPutAllFileRunner"/>
+                    <ref bean="ftpRenameFileRunner"/>
+                    <ref bean="ftpRenameAllFileRunner"/>
+                    <ref bean="ftpMoveFileRunner"/>
+                    <ref bean="ftpMoveAllFileRunner"/>
+                    <ref bean="ftpMoveDirRunner"/>
+                    <ref bean="ftpDeleteFileRunner"/>
+                    <ref bean="ftpDeleteAllFileRunner"/>
+                    <ref bean="ftpDeleteDirRunner"/>
+
+                    <ref bean="direDeleteXmlParser"/>
+                    <ref bean="direMoveXmlParser"/>
+                    <ref bean="direRenameXmlParser"/>
+                    <ref bean="direZipXmlParser"/>
+                    <ref bean="fileDeleteXmlParser"/>
+                    <ref bean="fileListXmlParser"/>
+                    <ref bean="fileMoveXmlParser"/>
+                    <ref bean="fileRenameXmlParser"/>
+                    <ref bean="fileUnZipXmlParser"/>
+                    <ref bean="fileZipXmlParser"/>
+
+
+                </list>
+            </property>
+        </bean>
+        <bean name="runnerContainer" class="com.asiainfo.dbx.ln.business.runner.RunnerContainerImpl">
+            <property name="runnerXmlParser" ref="runnerXmlParser"/>
+        </bean>
+</beans>

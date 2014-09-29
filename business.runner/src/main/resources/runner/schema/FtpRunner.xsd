@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://com.asiainfo.dbx.ln/ftp" xmlns:tns="http://com.asiainfo.dbx.ln/ftp" elementFormDefault="qualified">
+
+    <element name="ftpListFile">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="serverPath" type="string" use="required"></attribute>
+            <attribute name="serverFileNameRegex" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" ></attribute>
+        </complexType>
+    </element>
+
+    <element name="ftpGetFile">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="serverPath" type="string" use="required"/>
+            <attribute name="serverFileName" type="string" use="required"/>
+            <attribute name="localPath" type="string" use="required"/>
+            <attribute name="localFileName" type="string"  use="required"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string"  ></attribute>
+        </complexType>
+    </element>
+
+    <element name="ftpGetAllFile">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="serverPath" type="string" use="required"/>
+            <attribute name="serverFileNameRegex" type="string" />
+            <attribute name="localPath" type="string" use="required"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string"  ></attribute>
+        </complexType>
+    </element>
+    <element name="ftpPutFile">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="serverPath" type="string" use="required"/>
+            <attribute name="serverFileName" type="string" use="required"/>
+            <attribute name="localPath" type="string" use="required"/>
+            <attribute name="localFileName" type="string" use="required"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string"  ></attribute>
+        </complexType>
+    </element>
+
+    <element name="ftpPutAllFile">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="serverPath" type="string" use="required"/>
+            <attribute name="localPath" type="string" use="required"/>
+            <attribute name="localFileNameRegex" type="string"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string"  ></attribute>
+        </complexType>
+    </element>
+
+    <element name="ftpRenameFile">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="serverPath" type="string" use="required"/>
+            <attribute name="srcFileName"  type="string" use="required"/>
+            <attribute name="destFileName" type="string"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string"  ></attribute>
+        </complexType>
+    </element>
+
+    <element name="ftpRenameAllFile">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="serverPath" type="string" use="required"/>
+            <attribute name="srcFileNameRegex"  type="string" use="required"/>
+            <attribute name="destFileNameRegex" type="string"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string"  ></attribute>
+        </complexType>
+    </element>
+
+    <element name="ftpMoveFile">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="srcServerPath" type="string" use="required"/>
+            <attribute name="srcServerFileName"  type="string" use="required"/>
+            <attribute name="destServerPath" type="string" use="required"/>
+            <attribute name="destServerFileName" type="string"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string"  ></attribute>
+        </complexType>
+    </element>
+
+    <element name="ftpMoveAllFile">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="srcServerPath" type="string" use="required"/>
+            <attribute name="srcServerFileNameRegex"  type="string" use="required"/>
+            <attribute name="destServerPath" type="string" use="required"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string"  ></attribute>
+        </complexType>
+    </element>
+
+    <element name="ftpMoveDir">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="srcServerPath" type="string" use="required"/>
+            <attribute name="destServerPath" type="string" use="required"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string"  ></attribute>
+        </complexType>
+    </element>
+
+    <element name="ftpDeleteFile">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="serverPath" type="string" use="required"/>
+            <attribute name="serverfileName" type="string" use="required"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string"  ></attribute>
+        </complexType>
+    </element>
+
+    <element name="ftpDeleteAllFile">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="serverPath" type="string" use="required"/>
+            <attribute name="serverFileNameRegex" type="string" />
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string"  ></attribute>
+        </complexType>
+    </element>
+
+    <element name="ftpDeleteDir">
+        <complexType>
+            <attribute name="serverId" type="string" use="required"/>
+            <attribute name="serverPath" type="string" use="required"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string"  ></attribute>
+        </complexType>
+    </element>
+
+</schema>

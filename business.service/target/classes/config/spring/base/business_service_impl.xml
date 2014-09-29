@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean name="myBatisResourceFinder" class="com.asiainfo.dbx.ln.business.service.resource.finder.MyBatisResourceFinder"></bean>
+
+    <bean name="dataReadService" class="com.asiainfo.dbx.ln.business.service.data.DataReadService">
+        <property name="myBatisResourceFinder" ref="myBatisResourceFinder"></property>
+
+    </bean>
+
+    <bean name="dataInsertService" class="com.asiainfo.dbx.ln.business.service.data.DataInsertService">
+        <property name="myBatisResourceFinder" ref="myBatisResourceFinder"></property>
+    </bean>
+    <bean name="dataUpdateService" class="com.asiainfo.dbx.ln.business.service.data.DataUpdateService">
+        <property name="myBatisResourceFinder" ref="myBatisResourceFinder"></property>
+    </bean>
+    <bean name="dataDeleteService" class="com.asiainfo.dbx.ln.business.service.data.DataDeleteService">
+        <property name="myBatisResourceFinder" ref="myBatisResourceFinder"></property>
+    </bean>
+    <bean name="dataCountService" class="com.asiainfo.dbx.ln.business.service.data.DataCountService">
+        <property name="myBatisResourceFinder" ref="myBatisResourceFinder"></property>
+    </bean>
+
+    <bean name="dataAccessServiceFacade" class="com.asiainfo.dbx.ln.business.service.data.DataAccessServiceFacade">
+        <property name="dataAccessServiceList">
+            <list>
+                <ref bean="dataInsertService"/>
+                <ref bean="dataUpdateService"/>
+                <ref bean="dataDeleteService"/>
+                <ref bean="dataReadService"/>
+                <ref bean="dataCountService"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean name="dataAccessServerSuport" class="com.asiainfo.dbx.ln.business.service.support.data.DataAccessServiceSupport">
+        <property name="dataAccessServiceFacade" ref="dataAccessServiceFacade"/>
+    </bean>
+
+    <bean name="procedureServiceSupport" class="com.asiainfo.dbx.ln.business.service.support.procedure.ProcedureServiceSupport"></bean>
+    <bean name="defaultServiceSupport" class="com.asiainfo.dbx.ln.business.service.support.DefaultServiceSupport">
+        <property name="serviceSupportList">
+            <list>
+                <ref bean="dataAccessServerSuport"/>
+                <ref bean="procedureServiceSupport"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean name="dataReadServiceResult" class="com.asiainfo.dbx.ln.business.service.data.result.DataReadServiceResult">
+        <property name="dataCountService" ref="dataCountService"/>
+        <property name="dataReadService" ref="dataReadService"/>
+    </bean>
+    <bean name="dataInsertServiceResult" class="com.asiainfo.dbx.ln.business.service.data.result.DataInsertServiceResult">
+        <property name="dataInsertService" ref="dataInsertService"/>
+    </bean>
+
+    <bean name="dataUpdateServiceResult" class="com.asiainfo.dbx.ln.business.service.data.result.DataUpdateServiceResult">
+        <property name="dataUpdateService" ref="dataUpdateService"/>
+    </bean>
+    <bean name="dataDeleteServiceResult" class="com.asiainfo.dbx.ln.business.service.data.result.DataDeleteServiceResult">
+        <property name="dataDeleteService" ref="dataDeleteService"/>
+    </bean>
+
+    <bean name="dataCountServiceResult" class="com.asiainfo.dbx.ln.business.service.data.result.DataCountServiceResult">
+        <property name="dataCountService" ref="dataCountService"/>
+    </bean>
+
+    <bean name="dataAccessServiceFacadeResult" class="com.asiainfo.dbx.ln.business.service.data.DataAccessServiceFacade">
+        <property name="dataAccessServiceList">
+            <list>
+                <ref bean="dataInsertServiceResult"/>
+                <ref bean="dataUpdateServiceResult"/>
+                <ref bean="dataDeleteServiceResult"/>
+                <ref bean="dataReadServiceResult"/>
+                <ref bean="dataCountServiceResult"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean name="dataAccessServerSuportResult" class="com.asiainfo.dbx.ln.business.service.support.data.DataAccessServiceSupport">
+        <property name="dataAccessServiceFacade" ref="dataAccessServiceFacadeResult"/>
+    </bean>
+
+    <bean name="defaultServiceSupportResult" class="com.asiainfo.dbx.ln.business.service.support.DefaultServiceSupport">
+        <property name="serviceSupportList">
+            <list>
+                <ref bean="dataAccessServerSuportResult"/>
+                <ref bean="procedureServiceSupport"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>

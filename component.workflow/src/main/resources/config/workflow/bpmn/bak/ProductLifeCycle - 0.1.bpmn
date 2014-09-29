@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="myProcess" name="My process" isExecutable="true">
+    <startEvent id="starProductCycle" name="流程开始"></startEvent>
+    <userTask id="inputRequirement" name="产品需求录入"></userTask>
+    <sequenceFlow id="flow1" sourceRef="starProductCycle" targetRef="inputRequirement"></sequenceFlow>
+    <userTask id="requriementApprove" name="产品需求审批"></userTask>
+    <sequenceFlow id="requriementSubmit" name="需求提交审批" sourceRef="inputRequirement" targetRef="requriementApprove"></sequenceFlow>
+    <exclusiveGateway id="judgeRequriementApproveResult" name="需求审批结果判断"></exclusiveGateway>
+    <sequenceFlow id="flow3" sourceRef="requriementApprove" targetRef="judgeRequriementApproveResult"></sequenceFlow>
+    <sequenceFlow id="requriementApproveFail" name="需求审批失败" sourceRef="judgeRequriementApproveResult" targetRef="inputRequirement">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${result=false}]]></conditionExpression>
+    </sequenceFlow>
+    <subProcess id="modelDevelop" name="模块开发">
+      <startEvent id="startModulelFlow" name="启动模块开发流程"></startEvent>
+      <userTask id="developModule" name="模块开发" activiti:exclusive="false"></userTask>
+      <sequenceFlow id="flow5" sourceRef="startModulelFlow" targetRef="developModule"></sequenceFlow>
+      <userTask id="ATestModule" name="模块测试A"></userTask>
+      <sequenceFlow id="flow6" sourceRef="developModule" targetRef="ATestModule"></sequenceFlow>
+      <exclusiveGateway id="judgeATestResult" name="A测试结果判断"></exclusiveGateway>
+      <sequenceFlow id="flow7" sourceRef="ATestModule" targetRef="judgeBTestResult"></sequenceFlow>
+      <sequenceFlow id="ATestResultFail" name="测试A失败" sourceRef="judgeBTestResult" targetRef="developModule">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[{$result=false}]]></conditionExpression>
+      </sequenceFlow>
+      <userTask id="BTestModule" name="模块测试B" activiti:async="true"></userTask>
+      <sequenceFlow id="ATestResultSuccess" name="测试A成功" sourceRef="judgeBTestResult" targetRef="BTestModule">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${result==success}]]></conditionExpression>
+      </sequenceFlow>
+      <exclusiveGateway id="judgeBTestResult" name="B测试结果判断"></exclusiveGateway>
+      <sequenceFlow id="flow10" sourceRef="BTestModule" targetRef="judgeBTestResult"></sequenceFlow>
+      <sequenceFlow id="BTestResultFail" name="测试B失败" sourceRef="judgeBTestResult" targetRef="developModule">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${result==fail}]]></conditionExpression>
+      </sequenceFlow>
+      <endEvent id="endevent1" name="End"></endEvent>
+      <sequenceFlow id="BTestResultSuccess" name="测试B成功" sourceRef="judgeBTestResult" targetRef="endevent1">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${result==true}]]></conditionExpression>
+      </sequenceFlow>
+      <endEvent id="endevent2" name="End"></endEvent>
+    </subProcess>
+    <userTask id="productSaleApply" name="产品上市申请"></userTask>
+    <sequenceFlow id="devlopProductComplete" name="产品开发完成" sourceRef="modelDevelop" targetRef="productSaleApply"></sequenceFlow>
+    <userTask id="requirementDecompose" name="需求细化"></userTask>
+    <sequenceFlow id="requriementApproveSuccess" name="需求审批成功" sourceRef="judgeRequriementApproveResult" targetRef="requirementDecompose">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${result==true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="requriementDispatch" name="需求分发" sourceRef="requirementDecompose" targetRef="modelDevelop"></sequenceFlow>
+    <userTask id="productSaleApprove" name="产品上市审批"></userTask>
+    <sequenceFlow id="flow11" sourceRef="productSaleApply" targetRef="productSaleApprove"></sequenceFlow>
+    <exclusiveGateway id="JudgeSaleProductResult" name="上市审批结果判断"></exclusiveGateway>
+    <sequenceFlow id="flow12" sourceRef="productSaleApprove" targetRef="JudgeSaleProductResult"></sequenceFlow>
+    <sequenceFlow id="saleApproveSuccess" name="上市审批成功" sourceRef="JudgeSaleProductResult" targetRef="endevent2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${result==true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="saleApproveFail" name="上市审批失败" sourceRef="JudgeSaleProductResult" targetRef="productSaleApply">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${result==false}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_myProcess">
+    <bpmndi:BPMNPlane bpmnElement="myProcess" id="BPMNPlane_myProcess">
+      <bpmndi:BPMNShape bpmnElement="starProductCycle" id="BPMNShape_starProductCycle">
+        <omgdc:Bounds height="35.0" width="35.0" x="0.0" y="70.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="inputRequirement" id="BPMNShape_inputRequirement">
+        <omgdc:Bounds height="55.0" width="105.0" x="110.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="requriementApprove" id="BPMNShape_requriementApprove">
+        <omgdc:Bounds height="55.0" width="105.0" x="310.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="judgeRequriementApproveResult" id="BPMNShape_judgeRequriementApproveResult">
+        <omgdc:Bounds height="40.0" width="40.0" x="467.0" y="67.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="modelDevelop" id="BPMNShape_modelDevelop">
+        <omgdc:Bounds height="241.0" width="511.0" x="80.0" y="180.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startModulelFlow" id="BPMNShape_startModulelFlow">
+        <omgdc:Bounds height="35.0" width="35.0" x="100.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="developModule" id="BPMNShape_developModule">
+        <omgdc:Bounds height="55.0" width="105.0" x="170.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ATestModule" id="BPMNShape_ATestModule">
+        <omgdc:Bounds height="55.0" width="105.0" x="468.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="judgeATestResult" id="BPMNShape_judgeATestResult">
+        <omgdc:Bounds height="40.0" width="40.0" x="500.0" y="327.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="BTestModule" id="BPMNShape_BTestModule">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="320.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="judgeBTestResult" id="BPMNShape_judgeBTestResult">
+        <omgdc:Bounds height="40.0" width="40.0" x="202.0" y="327.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="110.0" y="330.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
+        <omgdc:Bounds height="35.0" width="35.0" x="323.0" y="790.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="productSaleApply" id="BPMNShape_productSaleApply">
+        <omgdc:Bounds height="55.0" width="105.0" x="288.0" y="469.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="requirementDecompose" id="BPMNShape_requirementDecompose">
+        <omgdc:Bounds height="55.0" width="105.0" x="620.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="productSaleApprove" id="BPMNShape_productSaleApprove">
+        <omgdc:Bounds height="55.0" width="105.0" x="288.0" y="589.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="JudgeSaleProductResult" id="BPMNShape_JudgeSaleProductResult">
+        <omgdc:Bounds height="40.0" width="40.0" x="320.0" y="699.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="35.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="110.0" y="87.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="requriementSubmit" id="BPMNEdge_requriementSubmit">
+        <omgdi:waypoint x="215.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="310.0" y="87.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="225.0" y="87.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="415.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="467.0" y="87.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="requriementApproveFail" id="BPMNEdge_requriementApproveFail">
+        <omgdi:waypoint x="487.0" y="67.0"></omgdi:waypoint>
+        <omgdi:waypoint x="486.0" y="23.0"></omgdi:waypoint>
+        <omgdi:waypoint x="350.0" y="23.0"></omgdi:waypoint>
+        <omgdi:waypoint x="164.0" y="23.0"></omgdi:waypoint>
+        <omgdi:waypoint x="162.0" y="60.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="369.0" y="30.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="135.0" y="237.0"></omgdi:waypoint>
+        <omgdi:waypoint x="170.0" y="237.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="275.0" y="237.0"></omgdi:waypoint>
+        <omgdi:waypoint x="468.0" y="237.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="520.0" y="265.0"></omgdi:waypoint>
+        <omgdi:waypoint x="222.0" y="327.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="ATestResultFail" id="BPMNEdge_ATestResultFail">
+        <omgdi:waypoint x="222.0" y="327.0"></omgdi:waypoint>
+        <omgdi:waypoint x="222.0" y="265.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="202.0" y="447.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="ATestResultSuccess" id="BPMNEdge_ATestResultSuccess">
+        <omgdi:waypoint x="242.0" y="347.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="347.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="232.0" y="521.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="300.0" y="347.0"></omgdi:waypoint>
+        <omgdi:waypoint x="242.0" y="347.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="BTestResultFail" id="BPMNEdge_BTestResultFail">
+        <omgdi:waypoint x="222.0" y="327.0"></omgdi:waypoint>
+        <omgdi:waypoint x="222.0" y="265.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="290.0" y="439.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="BTestResultSuccess" id="BPMNEdge_BTestResultSuccess">
+        <omgdi:waypoint x="202.0" y="347.0"></omgdi:waypoint>
+        <omgdi:waypoint x="145.0" y="347.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="206.0" y="514.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="devlopProductComplete" id="BPMNEdge_devlopProductComplete">
+        <omgdi:waypoint x="335.0" y="421.0"></omgdi:waypoint>
+        <omgdi:waypoint x="340.0" y="469.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="347.0" y="430.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="requriementApproveSuccess" id="BPMNEdge_requriementApproveSuccess">
+        <omgdi:waypoint x="507.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="620.0" y="87.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="517.0" y="87.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="requriementDispatch" id="BPMNEdge_requriementDispatch">
+        <omgdi:waypoint x="672.0" y="115.0"></omgdi:waypoint>
+        <omgdi:waypoint x="672.0" y="299.0"></omgdi:waypoint>
+        <omgdi:waypoint x="591.0" y="300.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="670.0" y="188.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="340.0" y="524.0"></omgdi:waypoint>
+        <omgdi:waypoint x="340.0" y="589.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="340.0" y="644.0"></omgdi:waypoint>
+        <omgdi:waypoint x="340.0" y="699.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="saleApproveSuccess" id="BPMNEdge_saleApproveSuccess">
+        <omgdi:waypoint x="340.0" y="739.0"></omgdi:waypoint>
+        <omgdi:waypoint x="340.0" y="790.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="350.0" y="739.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="saleApproveFail" id="BPMNEdge_saleApproveFail">
+        <omgdi:waypoint x="320.0" y="719.0"></omgdi:waypoint>
+        <omgdi:waypoint x="226.0" y="719.0"></omgdi:waypoint>
+        <omgdi:waypoint x="226.0" y="617.0"></omgdi:waypoint>
+        <omgdi:waypoint x="226.0" y="499.0"></omgdi:waypoint>
+        <omgdi:waypoint x="288.0" y="496.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="100.0" x="145.0" y="610.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

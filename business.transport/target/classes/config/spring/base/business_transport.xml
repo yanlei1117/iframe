@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+        <bean name="defaultHeaderRender" class="com.asiainfo.dbx.ln.business.transport.http.header.DefaultHeaderRender"></bean>
+        <bean name="defaultAuthorizationValidator" class="com.asiainfo.dbx.ln.business.transport.http.authorization.DefaultAuthorizationValidator"></bean>
+
+
+
+
+        <bean name="headerRenderResourceHandler" class="com.asiainfo.dbx.ln.business.transport.resource.HeaderRenderResourceHandler">
+            <property name="headerRender" ref="defaultHeaderRender"></property>
+        </bean>
+        <bean name="authorizationResourceJsonHandler" class="com.asiainfo.dbx.ln.business.transport.resource.AuthorizationResourceJsonHandler">
+            <property name="authorizationValidator" ref="defaultAuthorizationValidator"/>
+        </bean>
+        <bean name="serviceResourceJsonHandler" class="com.asiainfo.dbx.ln.business.transport.resource.ServiceResourceJsonHandler"></bean>
+
+
+
+        <bean name="resourceJsonHandlerList" class="java.util.ArrayList">
+            <constructor-arg>
+                <list>
+                    <ref bean="headerRenderResourceHandler"/>
+                    <ref bean="authorizationResourceJsonHandler"/>
+                    <ref bean="serviceResourceJsonHandler"/>
+                </list>
+            </constructor-arg>
+        </bean>
+
+        <bean name="defaultAutoInjectResourceJsonHandler" class="com.asiainfo.dbx.ln.business.transport.resource.DefaultAutoInjectResourceJsonHandler">
+            <property name="list" ref="resourceJsonHandlerList"></property>
+        </bean>
+
+        <bean  name="jsonDataRestfulController" class="com.asiainfo.dbx.ln.business.transport.http.rest.JsonDataRestfulController">
+            <property name="resourceJsonHandler" ref="defaultAutoInjectResourceJsonHandler"/>
+        </bean>
+
+
+        <bean  name="jsonProcedureRestfulController" class="com.asiainfo.dbx.ln.business.transport.http.rest.JsonProcedureRestfulController">
+            <property name="resourceJsonHandler" ref="defaultAutoInjectResourceJsonHandler"/>
+        </bean>
+
+</beans>

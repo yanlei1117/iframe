@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+		
+
+		<bean name="groupManager" class="com.asiainfo.dbx.ln.component.workflow.activiti.group.GroupManager">
+			<property name="identityService" ref="identityService"></property>
+		</bean>
+		<bean name="userManager" class="com.asiainfo.dbx.ln.component.workflow.activiti.user.UserManager">
+			<property name="identityService" ref="identityService"></property>
+		</bean>
+
+      <!--可由其它配置文件覆盖该taskNode,以支持不同的task属性-->
+       <bean name="taskNode" class="com.asiainfo.dbx.ln.component.workflow.TaskNode" scope="prototype"></bean>
+
+       <!--该类与processFlow是循环依赖关系，需设置lazy_init=true -->
+        <bean name="taskNodeConverter" class="com.asiainfo.dbx.ln.component.workflow.activiti.taskconvert.TaskNodeConverterImpl" lazy-init="true">
+            <property name="processFlow" ref="processFlow"></property>
+            <!-- 原生注入 taskNode-->
+            <lookup-method name="getTaskNode" bean="taskNode"></lookup-method>
+        </bean>
+
+    <bean id="processFlow" class="com.asiainfo.dbx.ln.component.workflow.activiti.ProcessFlowImpl">
+        <property name="identityService" ref="identityService"></property>
+        <property name="taskService" ref="taskService"></property>
+        <property name="runtimeService" ref="runtimeService"></property>
+        <property name="taskNodeConvert" ref="taskNodeConverter"></property>
+        <property name="currentUserId" value="@{CURRENT_USER_ID_}"></property>
+        <property name="historyService" ref="historyService"></property>
+
+    </bean>
+
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"></bean>
+
+    <bean class="com.asiainfo.dbx.ln.component.var.impl.VarContainerSpecialTypeImplSetter" >
+
+        <property name="varNamedFactoryList">
+            <list>
+                <ref bean="currentTask"></ref>
+            </list>
+        </property>
+    </bean>
+
+    <bean name="currentTask" class="com.asiainfo.dbx.ln.component.workflow.activiti.model.CurrentTask">
+
+    </bean>
+
+
+</beans>

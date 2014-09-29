@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <beans>
+
+
+        <bean  name="varContainerImpl" class="com.asiainfo.dbx.ln.component.var.impl.VarContainerOgnlImpl" scope="prototype"></bean>
+
+
+        <bean name="dataVarContainer" class="com.asiainfo.dbx.ln.component.var.impl.named.SpecialTypeDateVarContainer" scope="prototype"></bean>
+        <bean name="jsonVarContainer"  class="com.asiainfo.dbx.ln.component.var.impl.named.SpecialTypeJsonVarContainer" scope="prototype"></bean>
+        <bean name="uniqueVarContainer" class="com.asiainfo.dbx.ln.component.var.impl.named.SpecialTypeUniqueVarContainer" scope="prototype"></bean>
+        <bean name="sysdateVarContainer" class="com.asiainfo.dbx.ln.component.var.impl.named.SpecialTypeSysDateVarContainer" scope="prototype"></bean>
+
+
+        <bean name="scopeGlobalVarContainer" class="com.asiainfo.dbx.ln.component.var.impl.named.ScopeGlobalVarContainer">
+            <property name="varContainer" ref="varContainerImpl"/>
+            <property name="specialTypeVarContainerList">
+                <list>
+                    <ref bean="dataVarContainer"></ref>
+                    <ref bean="jsonVarContainer"></ref>
+                    <ref bean="uniqueVarContainer"></ref>
+                    <ref bean="sysdateVarContainer"></ref>
+                </list>
+            </property>
+        </bean>
+        <bean name="scopeDefaultVarContainer" class="com.asiainfo.dbx.ln.component.var.impl.named.ScopeDefaultThreadVarContainer">
+            <property name="specialTypeVarContainerList">
+                <list>
+                    <ref bean="dataVarContainer"></ref>
+                    <ref bean="jsonVarContainer"></ref>
+                    <ref bean="uniqueVarContainer"></ref>
+                    <ref bean="sysdateVarContainer"></ref>
+                </list>
+            </property>
+            <lookup-method  name="findVarContainer" bean="varContainerImpl"></lookup-method>
+        </bean>
+
+        <bean name=" varDispatchContainer" class="com.asiainfo.dbx.ln.component.var.impl.VarDispatchContainer">
+            <property name="scopeVarContainerList">
+                <list>
+                    <ref bean="scopeGlobalVarContainer"></ref>
+                </list>
+            </property>
+            <property name="scopeDefaultVarContainer" ref="scopeDefaultVarContainer"/>
+
+        </bean>
+
+
+
+        <bean name="varContainer" class="com.asiainfo.dbx.ln.component.var.impl.VarContentConvertVarContainer">
+            <property name="varContainer" ref="varDispatchContainer"/>
+        </bean>
+
+
+
+
+    </beans>
+</beans>

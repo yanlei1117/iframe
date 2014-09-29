@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://com.asiainfo.dbx.ln/das" xmlns:tns="http://com.asiainfo.dbx.ln/das" elementFormDefault="qualified">
+
+
+
+    <element name="dasCreate" >
+        <complexType >
+            <attribute name="repository" use="required" type="string"></attribute>
+            <attribute name="container" use="required" type="string"></attribute>
+            <attribute name="collection" use="required" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="item" use="required" type="string"></attribute>
+        </complexType>
+    </element>
+
+    <element name="dasDelete">
+
+        <complexType >
+            <attribute name="repository" use="required" type="string"></attribute>
+            <attribute name="container" use="required" type="string"></attribute>
+            <attribute name="collection" use="required" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="itemId"   type="string"></attribute>
+        </complexType>
+    </element>
+    <element name="dasUpdate">
+        <complexType >
+            <attribute name="repository" use="required" type="string"></attribute>
+            <attribute name="container" use="required" type="string"></attribute>
+            <attribute name="collection" use="required" type="string"></attribute>
+            <attribute name="item" use="required" type="string"></attribute>
+            <attribute name="itemId"   type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+        </complexType>
+    </element>
+    <element name="dasRead">
+        <complexType >
+            <attribute name="repository" use="required" type="string"></attribute>
+            <attribute name="container" use="required" type="string"></attribute>
+            <attribute name="collection" use="required" type="string"></attribute>
+            <attribute name="itemId"   type="string"></attribute>
+            <attribute name="criteria" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" use="required"/>
+        </complexType>
+    </element>
+    <element name="dasCount">
+        <complexType >
+            <attribute name="repository" use="required" type="string"></attribute>
+            <attribute name="container" use="required" type="string"></attribute>
+            <attribute name="collection" use="required" type="string"></attribute>
+            <attribute name="criteria" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" use="required"/>
+        </complexType>
+    </element>
+
+</schema>

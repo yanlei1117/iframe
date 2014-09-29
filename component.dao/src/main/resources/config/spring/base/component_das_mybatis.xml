@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--扫描config/mybatis/spring/下或其子包下所有 mybatis_spring_config 开头的xml加载-->
+    <!--
+       在具体项目中增加包 config/mybatis/spring/下或其子包下增加mybatis_spring_config*.xml,
+       <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+            配置MyBatis映射器类包所在的类路径，多个用逗号或分号分隔，该映射器类（接口）会被加载。
+            映射器类特点：
+               1.接口
+               2.声明的方法上带有MyBatis的Annotaion 如
+                  @Insert("insert into user(userName,password,comment) values(#{userName},#{password},#{comment})")
+                    public int insert(User user);
+
+                    @Update("update user set userName=#{userName},password=#{password},comment=#{comment} where userName=#{userName}")
+                    public int update(User user);
+
+                    @Delete("delete from user where userName=#{userName}")
+                    public int delete(String userName);
+
+                    @Select("select * from user order by userName asc")
+                    public List<User> selectAll();
+
+                    @Select("select count(*) c from user;")
+                    public int countAll();
+
+                    @Select("select * from user where userName=#{userName}")
+                    public User findByUserName(String userName);
+                3.声明的方法没有带Annotation,但通过接口中的类全名==命名空间而找到对应的Mapper.xml,且方法名==select.id|insert.id|delete.id
+                   如：
+                     com.asiainfo.dbx.ln.model.mybatis.test.PersonMapper类：
+                     public interface PersonMapper{
+                      int insert(Person record);
+                      }
+                      其对应的Mapper.xml为：PersonMapper.xml,其命名空间==映射类全名，insert元素的id="insert" 等于 接口的方法名
+
+                    <mapper namespace="com.asiainfo.dbx.ln.model.mybatis.test.PersonMapper" >
+                     <insert id="insert" parameterType="com.asiainfo.dbx.ln.model.mybatis.test.Person" >
+
+                        insert into person (id, name, identity_number,
+                        sex, bithday)
+                        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{identityNumber,jdbcType=VARCHAR},
+                        #{sex,jdbcType=CHAR}, #{bithday,jdbcType=DATE})
+                    </insert>
+                    </mapper>
+
+           <property name="basePackage" value="com.asiainfo.dbx.ln.model.mybatis.test"/>
+           <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+        </bean>
+    -->
+
+    <import resource="classpath*:config/mybatis/spring/**/mybatis_spring_config*.xml"></import>
+     <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+         <property name="dataSource" ref="dataSource" />
+         <!---->
+         <property name="configLocation" value="classpath:config/mybatis/mybatis_config_default.xml" />
+         <!--加载多个MyBatis 映射文件，实际项目中类中径下：config/mybatis/mybatis_mapper/任意目录/*.xml 都会当做映射文件加载-->
+         <property name="mapperLocations" value="classpath*:config/mybatis/mapper/**/*.xml" />
+     </bean>
+
+    <bean id="sqlSessionTemplate"  class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+        <constructor-arg index="1" value="REUSE"/>
+    </bean>
+
+    <bean id="batchSqlSessionTemplate"  class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+        <constructor-arg index="1" value="BATCH"/>
+    </bean>
+    <bean name="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <bean name="jdbcDao" class="com.asiainfo.dbx.ln.component.dao.jdbc.JdbcDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+    </bean>
+    <bean name="myBatisDao" class="com.asiainfo.dbx.ln.component.dao.mybatis.MyBatisDaoImpl">
+        <property name="batchSqlSessionTemplate" ref="batchSqlSessionTemplate"></property>
+        <property name="sqlSessionTemplate" ref="sqlSessionTemplate"></property>
+    </bean>
+
+    <!--扫描指定包下的接口，做映射器类-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.asiainfo.dbx.ln.component.dao.mybatis.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+</beans>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+        <bean name="hashMapPoolFactory" class="com.asiainfo.dbx.ln.component.pool.HashMapFactory"></bean>
+
+        <bean name="stringBuilderPoolFactory" class="com.asiainfo.dbx.ln.component.pool.StringBuilderFactory"></bean>
+
+
+        <bean name="objectRefPool" class="com.asiainfo.dbx.ln.component.pool.ObjectPoolApacheImpl">
+            <property name="allowFindFactoryByTypeFromSpring" value="true"/>
+        </bean>
+
+
+</beans>

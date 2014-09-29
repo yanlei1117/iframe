@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/business.api/business.api.iml" filepath="$PROJECT_DIR$/business.api/business.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/business.runner/business.runner.iml" filepath="$PROJECT_DIR$/business.runner/business.runner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/business.service/business.service.iml" filepath="$PROJECT_DIR$/business.service/business.service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/business.transport/business.transport.iml" filepath="$PROJECT_DIR$/business.transport/business.transport.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.api/component.api.iml" filepath="$PROJECT_DIR$/component.api/component.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.boot/component.boot.iml" filepath="$PROJECT_DIR$/component.boot/component.boot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.config/component.config.iml" filepath="$PROJECT_DIR$/component.config/component.config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.dao/component.dao.iml" filepath="$PROJECT_DIR$/component.dao/component.dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.expression/component.expression.iml" filepath="$PROJECT_DIR$/component.expression/component.expression.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.file/component.file.iml" filepath="$PROJECT_DIR$/component.file/component.file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.json/component.json.iml" filepath="$PROJECT_DIR$/component.json/component.json.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.net/component.net.iml" filepath="$PROJECT_DIR$/component.net/component.net.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.pool/component.pool.iml" filepath="$PROJECT_DIR$/component.pool/component.pool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.root.iml" filepath="$PROJECT_DIR$/component.root.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.var/component.var.iml" filepath="$PROJECT_DIR$/component.var/component.var.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.workflow/component.workflow.iml" filepath="$PROJECT_DIR$/component.workflow/component.workflow.iml" />
+      <module fileurl="file://$PROJECT_DIR$/component.xml/component.xml.iml" filepath="$PROJECT_DIR$/component.xml/component.xml.iml" />
+    </modules>
+  </component>
+</project>
+

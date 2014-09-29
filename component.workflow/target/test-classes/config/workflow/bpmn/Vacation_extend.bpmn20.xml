@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:activiti="http://activiti.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.activiti.org/vacation">
+
+
+    <process id="vacationNew"  name="请假流程"  isExecutable="true">
+        <startEvent id="startEvent" name="流程开始"></startEvent>
+        <userTask id="vacationRequest" name="请假申请">
+            <extensionElements>
+             <activiti:taskListener event="create" expression="${userTaskFireCreate.createTask(task)}"></activiti:taskListener>
+            </extensionElements>
+        </userTask>
+
+        <userTask id="vocationCandidateAuditorGroupChoice" name="请假候选审批组选择">
+            <extensionElements>
+                <activiti:taskListener event="create" expression="${userTaskFireCreate.createTask(task)}"></activiti:taskListener>
+            </extensionElements>
+        </userTask>
+
+        <userTask id="vacationModify" name="请假申请修改">
+            <extensionElements>
+                   <activiti:taskListener event="create" expression="${userTaskFireCreate.createTask(task)}"></activiti:taskListener>
+            </extensionElements>
+
+        </userTask>
+
+        <userTask id="vacationAudit" name="请假流程审批">
+            <extensionElements>
+                 <activiti:taskListener event="create" expression="${userTaskFireCreate.createTask(task)}"></activiti:taskListener>
+            </extensionElements>
+        </userTask>
+        <exclusiveGateway id="vacationBranch" name="请假流程分流"></exclusiveGateway>
+
+        <endEvent id="endEvent"></endEvent>
+
+        <sequenceFlow  sourceRef="startEvent" targetRef="vacationRequest"></sequenceFlow>
+        <sequenceFlow sourceRef="vacationRequest" targetRef="vocationCandidateAuditorGroupChoice"></sequenceFlow>
+        <sequenceFlow sourceRef="vocationCandidateAuditorGroupChoice" targetRef="vacationAudit"></sequenceFlow>
+        <sequenceFlow sourceRef="vacationAudit" targetRef="vacationBranch"></sequenceFlow>
+        <sequenceFlow sourceRef="vacationBranch" targetRef="endEvent">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${aggree==true}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow sourceRef="vacationBranch" targetRef="vacationModify">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${aggree == false}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow sourceRef="vacationModify" targetRef="vacationAudit"></sequenceFlow>
+
+    </process>
+</definitions>

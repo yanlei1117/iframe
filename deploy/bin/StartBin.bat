@@ -1,0 +1,1 @@
+java -cp ../lib/component.boot.jar;../lib/slf4j-api-1.7.6.jar;../lib/logback-core-1.1.2.jar;../lib/logback-classic-1.1.2.jar;../lib/logback-access-1.1.2.jar com.asiainfo.dbx.ln.component.boot.BootBin  > ../logs/bootBin.log

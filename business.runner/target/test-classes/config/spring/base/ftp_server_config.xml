@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean name="ftpConfig_192.168.169.14" class="com.asiainfo.dbx.ln.component.net.ftp.FtpConfig">
+        <property name="serverIp" value="192.168.169.14"/>
+        <property name="serverPort"  value="21"/>
+        <property name="username" value="ailn"/>
+        <property name="password" value="ailn!123"/>
+        <property name="serverSystem" value="UNIX"/>
+        <property name="serverPathSpliter" value="/"/>
+        <property name="bufferSize" value="512000"/>
+        <property name="receiveBufferSize" value="256000"/>
+        <property name="receieveDataSocketBufferSize" value="128000"/>
+    </bean>
+    <bean name="ftpServer_192.168.169.14" class="com.asiainfo.dbx.ln.component.net.ftp.FtpOperatorApacheImpl">
+        <property name="ftpConfig" ref="ftpConfig_192.168.169.14"/>
+    </bean>
+
+
+    <bean name="ftpConfig_192.168.168.120" class="com.asiainfo.dbx.ln.component.net.ftp.FtpConfig">
+        <property name="serverIp" value="192.168.168.120"/>
+        <property name="serverPort"  value="21"/>
+        <property name="username" value="guest"/>
+        <property name="password" value="guest"/>
+        <property name="serverPathSpliter" value="/"/>
+        <property name="bufferSize" value="512000"/>
+        <property name="receiveBufferSize" value="256000"/>
+        <property name="receieveDataSocketBufferSize" value="128000"/>
+    </bean>
+    <bean name="ftpServer_192.168.168.120" class="com.asiainfo.dbx.ln.component.net.ftp.FtpOperatorApacheImpl">
+        <property name="ftpConfig" ref="ftpConfig_192.168.168.120"/>
+    </bean>
+
+
+    <bean name="ftpConfig_10.65.9.196" class="com.asiainfo.dbx.ln.component.net.ftp.FtpConfig">
+        <property name="serverIp" value="10.65.9.196"/>
+        <property name="serverPort"  value="21"/>
+        <property name="username" value="vgop"/>
+        <property name="password" value="vgop*123"/>
+        <property name="serverSystem" value="UNIX"/>
+        <property name="serverPathSpliter" value="/"/>
+        <property name="bufferSize" value="512000"/>
+        <property name="receiveBufferSize" value="256000"/>
+        <property name="receieveDataSocketBufferSize" value="128000"/>
+    </bean>
+    <bean name="ftpServer_10.65.9.196" class="com.asiainfo.dbx.ln.component.net.ftp.FtpOperatorApacheImpl">
+        <property name="ftpConfig" ref="ftpConfig_10.65.9.196"/>
+    </bean>
+
+</beans>

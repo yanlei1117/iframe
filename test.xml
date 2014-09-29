@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<body name="body" class="sys_normal" cssFiles="{#sys.contextPath#}/plananalysis/theme/{#themePath#}/master1.css"
+      headerScript="" footerScript="" extLastScript="" className="com.asiainfo.biapp.plandesign.ThemeFilePath"
+      methodName="setThemePath" head="" compact="true">
+    <method name="method" className="com.asiainfo.biapp.plandesign.action.PaListAction" methodName="setChartCon"/>
+    <method name="method_init" className="com.asiainfo.biapp.plandesign.action.PaListAction"
+            methodName="setPlanManagePageAttributes"/>
+    <folder name="脚本">
+        <extScript name="variables"
+                   header="var sys=[];&#xA;sys.PLAN_TYPE_BASE=1;&#xA;var needApprove='{#needApprove#}';&#xA;var currentUserId='{#currentUserId#}';&#xA;var APPROVE_STATUS_NOT_SUBMIT = '1';&#xA;var APPROVE_STATUS_PENDING = '2';&#xA;var APPROVE_STATUS_PASS = '3';&#xA;var APPROVE_STATUS_NOT_PASS = '4';"/>
+        <extScript name="grid_util"
+                   footer="/*取得GRID选中的所有行的指定列组成的数组*/&#xA;		function getGridSelectValues(id,index){&#xA;			var grid = Ext.getCmp(id);&#xA;			var count = grid.getStore().getCount();&#xA;			var records = grid.getSelectionModel().getSelections();&#xA;			if(!records || records.length==0){&#xA;				Ext.MessageBox.alert('错误','请先选择一条记录！');&#xA;				return null;&#xA;			}&#xA;			var values = new Array();&#xA;			var p = 0;&#xA;			Ext.each(records,function(v,i,a){&#xA;				var fieldName = grid.getColumnModel().getDataIndex(index);&#xA;				var data = v.get(fieldName);&#xA;				values[p++]=data;&#xA;			});&#xA;			return values;&#xA;		}"/>
+        <extScript name="ajax_util"
+                   footer="function ajaxDeletePmpPlan(id){&#xA;Ext.Ajax.request({&#xA;				url : '{#sys.contextPath#}/plananalysis/paListAction.pado?actionType=deletePmpPlan&amp;id='+id,&#xA;				success: function(result,options){&#xA;					if (result.responseText.length&gt;0){&#xA;						Ext.MessageBox.alert('提示',result.responseText);&#xA;					}&#xA;					grid_store.reload();&#xA;									},&#xA;				failure: function(result,options){&#xA;						Ext.MessageBox.alert('错误','出错了');&#xA;				}&#xA;			});&#xA;&#xA;}&#xA;&#xA;function ajaxCopyPmpPlan(id,name){&#xA;Ext.Ajax.request({&#xA;				url : '{#sys.contextPath#}/plananalysis/pmpPlanTempletAction.pado?actionType=copyPmpPlan',&#xA;				params:{planId:id,name:name},&#xA;				success: function(result,options){&#xA;					if (result.responseText.length&gt;0){&#xA;						Ext.MessageBox.alert('错误',result.responseText);&#xA;&#xA;					}else{&#xA;						Ext.MessageBox.alert('提示','资费已复制！');&#xA;						grid_store.reload();&#xA;						win.hide();&#xA;					}&#xA;					&#xA;					&#xA;				},&#xA;				failure: function(result,options){&#xA;						Ext.MessageBox.alert('错误','出错了');&#xA;				}&#xA;			});&#xA;&#xA;}&#xA;/*复制到多个地市*/&#xA;function ajaxCopyPlanToCity(id,name,bossCode,cities){&#xA;Ext.Ajax.request({&#xA;				url : '{#sys.contextPath#}/plananalysis/pmpPlanTempletAction.pado?actionType=copyPlanToCities',&#xA;				params:{planId:id,planName:name,bossCode:bossCode,cities:cities},&#xA;				success: function(result,options){&#xA;					if (result.responseText.length&gt;0){&#xA;						Ext.MessageBox.alert('错误',result.responseText);&#xA;&#xA;					}else{&#xA;						Ext.MessageBox.alert('提示','资费已复制！');&#xA;						grid_store.reload();&#xA;						win_copy_to_city.hide();&#xA;					}&#xA;					&#xA;					&#xA;				},&#xA;				failure: function(result,options){&#xA;						Ext.MessageBox.alert('错误','出错了');&#xA;				}&#xA;			});&#xA;&#xA;}&#xA;&#xA;function ajaxSavePlanAsTemplet(id,name){&#xA;Ext.Ajax.request({&#xA;				url : '{#sys.contextPath#}/plananalysis/pmpPlanTempletAction.pado?actionType=saveAsTempletPmpPlan',&#xA;				params:{planId:id,name:name},&#xA;				success: function(result,options){&#xA;					if (result.responseText.length&gt;0){&#xA;						Ext.MessageBox.alert('错误',result.responseText);&#xA;&#xA;					}else{&#xA;						Ext.MessageBox.alert('提示','另存为模板成功！');&#xA;						/*grid_store.reload();*/&#xA;						winTemplet.hide();&#xA;					}&#xA;					&#xA;					&#xA;				},&#xA;				failure: function(result,options){&#xA;						Ext.MessageBox.alert('错误','出错了');&#xA;				}&#xA;			});&#xA;&#xA;}&#xA;&#xA;function ajaxExportPmpPlan(id){&#xA;Ext.Ajax.request({&#xA;				url : '{#sys.contextPath#}/plananalysis/pmpPlanExportAction.pado?actionType=exportPlan',&#xA;				params:{planId:id},&#xA;				success: function(result,options){&#xA;					if (result.responseText.length&gt;0){&#xA;						Ext.MessageBox.alert('错误',result.responseText);&#xA;&#xA;					}else{&#xA;						Ext.MessageBox.alert('提示','资费已复制！');&#xA;						grid_store.reload();&#xA;						win.hide();&#xA;					}&#xA;					&#xA;					&#xA;				},&#xA;				failure: function(result,options){&#xA;						Ext.MessageBox.alert('错误','出错了');&#xA;				}&#xA;			});&#xA;&#xA;}&#xA;&#xA;function ajaxSavePmpPlanAsHistory(id,desc){&#xA;Ext.Ajax.request({&#xA;				url : '{#sys.contextPath#}/plananalysis/pmpPlanTempletAction.pado?actionType=savePmpPlanAsHistory',&#xA;				params:{planId:id,desc:desc},&#xA;				success: function(result,options){&#xA;					if (result.responseText.length&gt;0){&#xA;						Ext.MessageBox.alert('提示',result.responseText);&#xA;						winHistory.hide();&#xA;					}	&#xA;				},&#xA;				failure: function(result,options){&#xA;						Ext.MessageBox.alert('错误','出错了');&#xA;				}&#xA;			});&#xA;&#xA;}"/>
+        <extScript name="combo_util"
+                   footer="function addComboUnlimit(combo){&#xA;var MyRecord = Ext.data.Record.create([&#xA;		{name: 'text'},&#xA;		{name: 'value'}&#xA;		]);&#xA;var r=new MyRecord({&#xA;		text:&quot;不限&quot;,&#xA;		value:&quot;-1&quot;&#xA;		});&#xA;combo.store.insert(0,r);&#xA;}&#xA;function addCombosUnlimit(){&#xA;addComboUnlimit(combo_calltype);&#xA;addComboUnlimit(combo_longtype);&#xA;addComboUnlimit(combo_roamtype);&#xA;addComboUnlimit(combo_iptype);&#xA;addComboUnlimit(combo_opposite);&#xA;addComboUnlimit(combo_area);&#xA;addComboUnlimit(combo_pretime);&#xA;addComboUnlimit(combo_numtype);&#xA;&#xA;addComboUnlimit(combo_calltype1);&#xA;addComboUnlimit(combo_longtype1);&#xA;addComboUnlimit(combo_roamtype1);&#xA;addComboUnlimit(combo_iptype1);&#xA;addComboUnlimit(combo_opposite1);&#xA;addComboUnlimit(combo_area1);&#xA;addComboUnlimit(combo_pretime1);&#xA;addComboUnlimit(combo_numtype1);&#xA;&#xA;addComboUnlimit(combo_calltype2);&#xA;addComboUnlimit(combo_longtype2);&#xA;addComboUnlimit(combo_roamtype2);&#xA;addComboUnlimit(combo_iptype2);&#xA;addComboUnlimit(combo_opposite2);&#xA;addComboUnlimit(combo_area2);&#xA;addComboUnlimit(combo_pretime2);&#xA;addComboUnlimit(combo_numtype2);&#xA;&#xA;addComboUnlimit(combo_roamtype_newbusi);&#xA;addComboUnlimit(combo_opposite_newbusi);&#xA;addComboUnlimit(combo_numtype_newbusi);&#xA;&#xA;addComboUnlimit(combo_roamtype_newbusi1);&#xA;addComboUnlimit(combo_opposite_newbusi1);&#xA;addComboUnlimit(combo_numtype_newbusi1);&#xA;&#xA;addComboUnlimit(combo_roamtype_newbusi2);&#xA;addComboUnlimit(combo_opposite_newbusi2);&#xA;addComboUnlimit(combo_numtype_newbusi2);&#xA;&#xA;}"/>
+        <extScript name="combotree_util"
+                   last="/*获取树选中的节点构成的文字*/&#xA;function getComboTreeCheckText(tree) {&#xA;	var nodes = tree.getChecked();&#xA;	var data = new Array();&#xA;	var i, j = nodes.length;&#xA;	for (i = 0; i &lt; j; i++){&#xA;		data.push(Ext.encode(nodes[i][&quot;text&quot;]));&#xA;	}&#xA;	return data.join(&quot;,&quot;);&#xA;}&#xA;/*获取叠加包下拉树选中项构成的ID，为了与以前代码兼容，生成的格式类似['1','2']*/&#xA;function getPacketComboTreeCheckIds(tree){&#xA;	var nodes = tree.getChecked();&#xA;	var data = new Array();&#xA;	var i, j = nodes.length;&#xA;		for (i = 0; i &lt; j; i++){&#xA;		var id = Ext.encode(nodes[i].attributes.PLAN_ID);&#xA;		data.push(id);&#xA;	}&#xA;	return &quot;[&quot;+data.join(&quot;,&quot;)+&quot;]&quot;;&#xA;}&#xA;/*获取复制时所有选中地市的ID*/&#xA;function getCityComboTreeCheckIds(tree){&#xA;	var nodes = tree.getChecked();&#xA;	var data = new Array();&#xA;	var i, j = nodes.length;&#xA;		for (i = 0; i &lt; j; i++){&#xA;		var id = Ext.encode(nodes[i].attributes.CITY_ID);&#xA;		data.push(id);&#xA;	}&#xA;	return data.join(&quot;,&quot;);&#xA;}&#xA;&#xA;/*取消所有选中*/&#xA;function clearTreeSelections(tree){&#xA;var nodes=tree.getChecked(); &#xA;if(nodes &amp;&amp; nodes.length){&#xA; for(var i=0;i&lt;nodes.length;i++){&#xA;  /*设置UI状态为未选中状态*/&#xA;  nodes[i].getUI().toggleCheck(false);&#xA;  /*设置节点属性为未选中状态*/&#xA;  nodes[i].attributes.checked=false;&#xA; }&#xA;}&#xA;}"/>
+        <extScript name="plan_series_util"
+                   footer="/*根据资费类型级联资费系列，辽宁不需要*/&#xA;function loadSeriesByPlanType(){&#xA;	var province = '{#province#}';&#xA;	if (province.toLowerCase()=='liaoning'){&#xA;		return;&#xA;	}&#xA;	else if (province.toLowerCase()=='jilin'){&#xA;		combo_series.clearValue();&#xA;		store_plan_series.removeAll();&#xA;		var brandId = Ext.getCmp('combo_brand').getValue();&#xA;		var planType=Ext.getCmp('combo_plan_type').getValue();&#xA;		store_plan_series.load({params:{'planType':planType,'brandId':brandId}});&#xA;	}else if (province.toLowerCase()=='shandong'){&#xA;		return;&#xA;	}&#xA;        else{&#xA;		alert('省份配置不正确，请联系管理员！province is'+province);&#xA;	}&#xA;}&#xA;/*根据品牌级联资费系列*/&#xA;function loadSeriesByBrandId(){&#xA;	var province = '{#province#}';&#xA;	var planType;&#xA;	&#xA;	if (province.toLowerCase()=='liaoning'){&#xA;		planType = sys.PLAN_TYPE_BASE;&#xA;	}&#xA;	else if (province.toLowerCase()=='jilin'){&#xA;		planType=Ext.getCmp('combo_plan_type').getValue();&#xA;		if (planType!=sys.PLAN_TYPE_BASE){&#xA;			return;&#xA;		}&#xA;	}else{&#xA;		alert('省份配置不正确，请联系管理员！province is'+province);&#xA;		return;&#xA;	}&#xA;	combo_series.clearValue();&#xA;	store_plan_series.removeAll();&#xA;	var brandId = Ext.getCmp('combo_brand').getValue();&#xA;	store_plan_series.load({params:{'planType':planType,'brandId':brandId}});&#xA;}"/>
+        <extScript name="check_util"
+                   footer="/*验证资费名称中不能含有特殊字符*/&#xA;function checkPlanName(name){&#xA;	var containSpecial = RegExp(/[(\ )(\￥)(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&amp;)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\&quot;)(\,)(\.)(\/)(\&lt;)(\&gt;)(\?)(\)]+/);   &#xA;	if(containSpecial.test(name)) {	&#xA;              return false;&#xA;		}&#xA;     return true;&#xA;}"/>
+    </folder>
+    <folder name="数据源">
+        <extStore name="grid_store" data="" fields="" autoLoad="false"
+                  urlFields="{name:'plan_id'},{name:'city_id'},{name:'boss_code'},{name:'plan_code'},{name:'plan_type'},{name:'brand_id'},{name:'plan_series_id'},{name:'busi_type_id'},{name:'plan_name'},{name:'month_fee'},{name:'base_fee'},{name:'mon_employ_fee'},{name:'plan_desc'},{name:'plan_status_id'},{name:'plan_kind'},{name:'approve_status'},{name:'user_id'},{name:'plan_type_id'}"
+                  url="{#sys.contextPath#}/plananalysis/pmpQueryPlanAction.pado?actionType=queryPmpPlanByCon"
+                  onBeforeLoad="Ext.get('grid_result').mask('正在加载,请稍候......');"
+                  onAfterLoad="Ext.get('grid_result').unmask();"/>
+        <extStore name="store_plan_history"
+                  url="{#sys.contextPath#}/plananalysis/paListAction.pado?actionType=queryPlanHistory"
+                  urlFields="{name:'his_plan_id'},{name:'plan_id'},{name:'update_time'},{name:'ver_desc'}"
+                  autoLoad="false"/>
+        <lib name="pub_query" path="document\经分组件\公共组件\数据源"/>
+        <lib name="pmp_query" path="document\经分组件\资费管理平台\公共组件\数据源"/>
+        <extStore name="store_temp" data="[]" fields="'label','value'"/>
+        <query name="query_op_unit_newbusi"
+               sql="select a.op_unit_name, a.op_unit_id from pmp_dim_op_unit a where a.feerate_type=2 or a.feerate_type=4 order by a.op_unit_id"
+               fastMode="false"/>
+        <query name="query_op_unit_voice"
+               sql="select a.op_unit_name, a.op_unit_id from pmp_dim_op_unit a where a.feerate_type=1 or a.feerate_type=4 order by a.op_unit_id"
+               fastMode="false"/>
+        <query name="query_plan_type"
+               sql="select t.plan_type_name,t.plan_type_id from pmp_dim_plan_type t order by t.plan_type_id"/>
+        <extStore name="query_incr_op_detail_store"
+                  url="Main?file=WebBuilder/xml/pmp/query_dim_incr_op_detail_combo.xml" autoLoad="false" onAfterLoad=""
+                  urlFields="{name:'INCR_OP_DETAIL_ID'},{name:'INCR_OP_DETAIL_NAME'}"/>
+        <extStore name="query_incr_op_detail_store1"
+                  url="Main?file=WebBuilder/xml/pmp/query_dim_incr_op_detail_combo.xml" autoLoad="false" onAfterLoad=""
+                  urlFields="{name:'INCR_OP_DETAIL_ID'},{name:'INCR_OP_DETAIL_NAME'}"/>
+        <extStore name="query_incr_op_detail_store2"
+                  url="Main?file=WebBuilder/xml/pmp/query_dim_incr_op_detail_combo.xml" autoLoad="false" onAfterLoad=""
+                  urlFields="{name:'INCR_OP_DETAIL_ID'},{name:'INCR_OP_DETAIL_NAME'}"/>
+        <query name="query_plan_status"
+               sql="select t.plan_status_name,t.plan_status_id from pmp_dim_plan_status t order by t.plan_status_id"/>
+        <extStore name="store_plan_kind" fields="'label','value'" data="['显性(正常推出)','1'],['隐性(非正常推出)','2']"/>
+        <extStore name="store_plan_series"
+                  url="{#sys.contextPath#}/plananalysis/paListAction.pado?actionType=getPlanSeriesByBrandAndPlanType4XBuilder"
+                  autoLoad="false" urlFields="{name:'name'},{name:'id'}" onAfterLoad=""/>
+        <query name="query_month_fee_type" sql="select t.cyc_name,t.cyc_code from pmp_dim_charge_cyc t"/>
+        <query name="query_packet_4_combotree"
+               sql="select a.plan_name, a.plan_id,'false' as &quot;checked&quot; from pmp_plan a where a.plan_type = 2 or a.plan_type = 3 order by a.plan_type,a.plan_name"/>
+        <query name="query_manage_city" sql="select city_name, city_id from pmp_dim_city  where 1=1 {#cityCon#}"
+               fastMode="false"/>
+        <query name="query_plan_kind"
+               sql="select t.kind_name,t.kind_code from pmp_dim_plan_kind t order by t.kind_code"/>
+        <query name="query_plan_series"
+               sql="select t.plan_series_name,t.plan_series_id from pmp_dim_plan_series t order by t.is_newbusi, t.brand_id,t.plan_series_id"/>
+        <extStore name="store_city" fields=""
+                  url="{#sys.contextPath#}/plananalysis/paListAction.pado?actionType=getUserManageCities"
+                  urlFields="{name:'name'},{name:'id'}" autoLoad="false"/>
+    </folder>
+    <folder name="工具条">
+        <extMenu name="grid_menu" autoShow="false">
+            <extMenuItem name="menuItem_info" caption="详细信息" handler="" hidden="true" disabled="true"/>
+            <extMenuItem name="menuItem_add" caption="新增"
+                         handler="var url = '{#sys.contextPath#}/plananalysis/paListAction.pado?actionType=toEditPmpPlan';&#xA;window.location.href=url;"
+                         icon="WebBuilder/newImages/add.gif"/>
+            <extMenuItem name="menuItem_edit" caption="编辑"
+                         handler="var ids = getGridSelectValues('grid_result',0);&#xA;var planTypeIds=getGridSelectValues('grid_result',17);&#xA;&#xA;if (ids == null || ids.length == 0){&#xA;	Ext.MessageBox.alert('错误','请选择要编辑的数据！');&#xA;		return;&#xA;	}else if (ids.length &gt; 1){&#xA;		Ext.MessageBox.alert('错误','每次只能编辑一条数据！');&#xA;		return;&#xA;	}else{&#xA;		if (currentUserId !=''){&#xA;			var userIds = getGridSelectValues('grid_result',16);&#xA;			var userId = userIds[0];&#xA;			if (userId !=undefined &amp;&amp; userId !=null &amp;&amp; userId!=''){&#xA;				if (currentUserId != userId){&#xA;					Ext.MessageBox.alert('错误','您没有权限修改该资费！');&#xA;					return;&#xA;				}&#xA;			}&#xA;		}&#xA;		var id = ids[0];&#xA;                var planTypeId=planTypeIds[0];&#xA;		/*anjx 新增 当有审批时需要对一些操作进行限制*/&#xA;		if (needApprove.toLowerCase()=='on'){&#xA;			var status = getGridSelectValues('grid_result',15);&#xA;			status = status[0];&#xA;			if (status !=null &amp;&amp; status !=undefined){&#xA;				if (status == APPROVE_STATUS_PENDING || status == APPROVE_STATUS_PASS){&#xA;					Ext.MessageBox.alert('错误','该资费的状态为待审批或审批通过，不能修改！');&#xA;					return;&#xA;				}&#xA;			}&#xA;		}&#xA;		var cp =parent.window.location.href;&#xA;		var url = '{#sys.contextPath#}/Main?file=WebBuilder/xml/pmp/pmpPlanInfo.xml&amp;id='+id+'&amp;planTypeId='+planTypeId;&#xA;		window.location.href=url;&#xA;}"
+                         icon="WebBuilder/newImages/edit.gif"/>
+
+            <extMenuItem name="menuItem_del" caption="删除"
+                         handler="var ids = getGridSelectValues('grid_result',0);&#xA;if (ids == null || ids.length == 0){&#xA;	Ext.MessageBox.alert('错误','请选择要删除的数据！');&#xA;		return;&#xA;	}else if (ids.length &gt; 1){&#xA;		Ext.MessageBox.alert('错误','每次只能删除一条数据！');&#xA;		return;&#xA;	}else{&#xA;		if (currentUserId !=''){&#xA;			var userIds = getGridSelectValues('grid_result',16);&#xA;			var userId = userIds[0];&#xA;		        &#xA;			if (userId !=undefined &amp;&amp; userId !=null &amp;&amp; userId!=''){&#xA;				if (currentUserId != userId){&#xA;					Ext.MessageBox.alert('错误','您没有权限删除该资费！');&#xA;					return;&#xA;				}&#xA;			}&#xA;		}&#xA;		/*anjx 新增 当有审批时需要对一些操作进行限制*/&#xA;		if (needApprove.toLowerCase()=='on'){&#xA;			var status = getGridSelectValues('grid_result',15);&#xA;			status = status[0];&#xA;			if (status !=null &amp;&amp; status !=undefined){&#xA;				if (status == APPROVE_STATUS_PENDING || status == APPROVE_STATUS_PASS){&#xA;					Ext.MessageBox.alert('错误','该资费的状态为待审批或审批通过，不能删除！');&#xA;					return;&#xA;				}&#xA;			}&#xA;		}&#xA;		var id = ids[0];&#xA;		Ext.Msg.confirm('提示','确定要删除该资费？该资费的历史版本会一并删除',function(btn){&#xA;					if (btn == 'yes'){&#xA;					ajaxDeletePmpPlan(id);&#xA;					}&#xA;				});&#xA;		&#xA;	}"
+                         icon="WebBuilder/newImages/delete.gif"/>
+
+            <extMenuItem name="menuItem_export_list" caption="导出查询结果" hidden="false"
+                         handler="var url = '{#sys.contextPath#}/plananalysis/pmpPlanExportAction.pado?actionType=exportPlanQueryList';&#xA;window.open(url);"
+                         icon="WebBuilder/newImages/daochuchaxunjeguo.gif"/>
+
+        </extMenu>
+    </folder>
+    <folder name="ajax方法">
+        <extAjax name="queryPmpPlanByCon" out="panel_condition" in=""
+                 url="{#sys.contextPath#}/plananalysis/pmpQueryPlanAction.pado?actionType=setPmpPlanQueryInfo"
+                 onSuccess="grid_result.getStore().load({params:{start:0,limit:10}});" params=""/>
+        <extAjax name="queryPmpPlanByChart" out="chart_con" in=""
+                 url="{#sys.contextPath#}/plananalysis/pmpQueryPlanAction.pado?actionType=setPmpPlanQueryInfoByChart"
+                 onSuccess="grid_result.getStore().load({params:{start:0,limit:10}});"/>
+    </folder>
+    <folder name="表格列">
+        <extColumnModel name="columnModel_result_grid">
+            <extColumn name="column10" caption="资费编码" fieldName="plan_id" renderer="" width="60" hidden="true"/>
+            <extColumn name="column4" caption="资费名称" fieldName="plan_name"
+                       renderer="return '&lt;div ext:qtip=&quot;' + value + '&quot;&gt;'+ value +'&lt;/div&gt;';"
+                       width="150"/>
+            <extColumn name="column5" caption="BOSS代码" fieldName="boss_code"/>
+            <extColumn name="column19" caption="产品编码" fieldName="plan_code"/>
+            <extColumn name="column12" caption="资费类型" fieldName="plan_type"/>
+            <extColumn name="column" caption="地区" fieldName="city_id" width="60"/>
+            <extColumn name="column1" caption="品牌" fieldName="brand_id"/>
+            <extColumn name="column3" caption="业务类型" fieldName="busi_type_id" width="75"/>
+            <extColumn name="column2" caption="{#planSeriesLabel#}" fieldName="plan_series_id"/>
+            <extColumn name="column11" caption="产品状态" fieldName="plan_status_id"/>
+            <extColumn name="column13" caption="产品性质" fieldName="plan_kind"/>
+            <extColumn name="column6" caption="套餐费" fieldName="month_fee" width="75" hint="资费日租费/月租费" tag=""/>
+            <extColumn name="column7" caption="最低消费" fieldName="base_fee" width="60"/>
+            <extColumn name="column8" caption="使用费" fieldName="mon_employ_fee" width="60" hidden="true"/>
+            <extColumn name="column9" caption="资费产品描述" fieldName="plan_desc"
+                       renderer="return '&lt;div ext:qtip=&quot;' + value + '&quot;&gt;'+ value +'&lt;/div&gt;';"
+                       hint="资费产品描述"/>
+            <extColumn name="column18" caption="审批状态" fieldName="approve_status"
+                       renderer="if (value == null || value == undefined){&#xA;			return '未知';&#xA;		}&#xA;		var v = value.toString();&#xA;		if (v == APPROVE_STATUS_NOT_SUBMIT){&#xA;			return '未提交';&#xA;		}else if (v == APPROVE_STATUS_PENDING){&#xA;			return '等待审批';&#xA;		}else if (v == APPROVE_STATUS_PASS){&#xA;			return '审批通过';&#xA;		}else if (v == APPROVE_STATUS_NOT_PASS){&#xA;			return '审批不通过';&#xA;		}else{&#xA;			return '未知状态:'+v;&#xA;		}"
+                       hidden=""/>
+            <extColumn name="column20" caption="uid" fieldName="user_id" renderer="" hidden="true"/>
+            <extColumn name="column21" caption="计划类型id" fieldName="plan_type_id" renderer="" hidden="true"/>
+        </extColumnModel>
+        <extColumnModel name="columnModel_plan_history">
+            <extColumn name="column17" caption="HIS_ID" fieldName="his_plan_id" hidden="true"/>
+            <extColumn name="column16" caption="ID" fieldName="plan_id" hidden="true"/>
+            <extColumn name="column14" caption="版本时间" fieldName="update_time" width="160"/>
+            <extColumn name="column15" caption="备注" fieldName="ver_desc"/>
+        </extColumnModel>
+    </folder>
+    <folder name="面板按钮">
+        <extAction name="search_action" caption="查询" icon="" iconCls=""
+                   handler="var packets = getPacketComboTreeCheckIds(comboTree_packet__tree);&#xA;check_packet.setValue(packets);&#xA;queryPmpPlanByCon();&#xA;panel.body.dom.scrollTop=500;"
+                   minWidth="75"/>
+        <extAction name="reset_action" caption="重置" iconCls="" minWidth="75"
+                   handler="/*缓存标记位*/&#xA;var t1 = voice_con_flag.getValue();&#xA;var t2 = newbusi_con_flag.getValue();&#xA;extResetAllControlsValue('panel_condition');&#xA;clearTreeSelections(comboTree_packet__tree);&#xA;check_packet.setValue('[]');&#xA;combo_plan_type.setValue(1);&#xA;voice_con_flag.setValue(t1);&#xA;newbusi_con_flag.setValue(t2);"/>
+
+    </folder>
+    <folder name="对话框">
+
+    </folder>
+    <extViewPort name="viewPort" layout="fit">
+        <extPanel name="panel" border="true" layout="anchor" columns="1" autoScroll="true" region="north" split=""
+                  caption="">
+            <extPanel name="panel_condition" border="false" layout="column" caption="" columns="1" class=""
+                      autoScroll="" region="" height="" buttons="search_action" width="" anchor="98%" margin=""
+                      defaults="" frame="" tbar="" tools="">
+                <extPanel name="panel7" border="false" margin="" frame="false" buttons="" defaults="" layout=""
+                          content="" left="" top="" width="" height="" autoScroll="true">
+                    <extFieldSet name="fieldSet" caption="基本信息" autoHeight="true" collapsible="false" layout="table"
+                                 columns="6" class="" style="" defaults="style:'margin:2 0 0 0'" padding="" tag=""
+                                 anchor="98%" width="100%" margin="" left="1" top="20">
+                        <extLabel name="extLabel36" caption="产品编码：" width="100" style="text-align:right"
+                                  class="sys_normal"/>
+                        <extTextField name="text_code" width="162"/>
+                        <extLabel name="extLabel4" caption="BOSS代码：" class="sys_normal" style="text-align:right"
+                                  width="100"/>
+                        <extTextField name="text_id" width="162"/>
+                        <extLabel name="extLabel5" caption="资费名称：" class="sys_normal" style="text-align:right"
+                                  width="100"/>
+                        <extTextField name="text_name" caption="caption" margin="" width="162" colspan=""/>
+                        <extLabel name="extLabel" caption="所属地区：" class="sys_normal" style="text-align:right" tag=""
+                                  width="100"/>
+                        <extPanel name="panel12" border="false">
+                            <extComboBox name="combo_city" caption="" mode="local" width="" query="" emptyText="--请选择--"
+                                         forceSelection="true" readOnly=""
+                                         onBlur="if (control.el.dom.value == '')&#xA;control.setValue('');"
+                                         store="store_city" displayField="name" valueField="id" loadStore="false"/>
+                        </extPanel>
+                        <extLabel name="extLabel51" caption="资费类型：" class="sys_normal" style="text-align:right"
+                                  width="100"/>
+                        <extComboBox name="combo_plan_type" mode="local" query="query_plan_type"
+                                     onBlur="if (control.el.dom.value == '')&#xA;control.setValue('');"
+                                     emptyText="--请选择--" forceSelection="true" onSelect="loadSeriesByPlanType();"/>
+                        <extLabel name="extLabel1" caption="品牌：" class="sys_normal" width="100"
+                                  style="text-align:right"/>
+                        <extPanel name="panel11" border="false">
+                            <extComboBox name="combo_brand" caption="" mode="local" query="dim_pub_brand_query"
+                                         selectOnFocus="" forceSelection="true" emptyText="--请选择--"
+                                         onBlur="if (control.el.dom.value == '')&#xA;control.setValue('');"
+                                         onSelect="loadSeriesByBrandId();"/>
+                        </extPanel>
+                        <extLabel name="extLabel2" caption="{#planSeriesLabel#}：" class="sys_normal"
+                                  style="text-align:right" width="100"/>
+                        <extPanel name="panel13" border="false">
+                            <extComboBox name="combo_series" caption="caption" mode="local" store="store_plan_series"
+                                         forceSelection="true" emptyText="--请选择--"
+                                         onBlur="if (control.el.dom.value == '')&#xA;control.setValue('');" query=""
+                                         displayField="name" valueField="id" loadStore="false"/>
+                        </extPanel>
+                        <extLabel name="extLabel3" caption="业务类型：" class="sys_normal" margin="" style="text-align:right"
+                                  width="100"/>
+                        <extPanel name="panel14" border="false">
+                            <extComboBox name="combo_busitype" caption="caption" mode="local" margin=""
+                                         query="pmp_dim_busi_type" store="" forceSelection="true" emptyText="--请选择--"
+                                         onBlur="if (control.el.dom.value == '')&#xA;control.setValue('');"
+                                         onSelect="/*&#xA;var v = control.value;&#xA;store_plan_series.removeAll();&#xA;combo_series.setValue('');&#xA;if (v=='1' || v=='3'){&#xA;store_plan_series.load({params:{idCol:'plan_series_id',nameCol:'plan_series_name',tableName:'pmp_dim_plan_series'}});&#xA;}else if (v=='2'){&#xA;store_plan_series.load({params:{idCol:'incr_op_id',nameCol:'incr_op_name',tableName:'pmp_dim_incr_op'}});&#xA;}&#xA;*/"/>
+                        </extPanel>
+                        <extLabel name="extLabel26" caption="产品状态：" style="text-align:right" class="sys_normal"
+                                  width="100"/>
+                        <extPanel name="panel25" border="false">
+                            <extComboBox name="combo_status" mode="local" query="query_plan_status" emptyText="--请选择--"
+                                         onBlur="if (control.el.dom.value == '')&#xA;control.setValue('');"
+                                         forceSelection="true"/>
+                        </extPanel>
+                        <extLabel name="extLabel62" caption="产品性质：" class="sys_normal" style="text-align:right"
+                                  width="100"/>
+                        <extPanel name="panel26" border="false">
+                            <extComboBox name="combo_kind" mode="local" store="" displayField="label" valueField="value"
+                                         emptyText="--请选择--"
+                                         onBlur="if (control.el.dom.value == '')&#xA;control.setValue('');"
+                                         forceSelection="true" query="query_plan_kind"/>
+                        </extPanel>
+                        <extLabel name="extLabel6" caption="最低消费：" class="sys_normal" style="text-align:right"
+                                  width="100"/>
+                        <extPanel name="panel1" border="false" colspan="" tag="" style="" padding="" width="" left=""
+                                  top="" margin="" layout="table" columns="4" defaults="style:'margin:1 0 0 0'">
+                            <extNumber name="number_basefee_from" caption="caption" margin="" width="60"
+                                       allowNegative="false"/>
+                            <extLabel name="extLabel7" caption="至" class=""/>
+                            <extNumber name="number_basefee_to" caption="caption" margin="" width="60"
+                                       allowNegative="false"/>
+                            <extLabel name="extLabel29" caption="（元）"/>
+                        </extPanel>
+                        <extLabel name="extLabel61" caption="套餐费：" class="sys_normal" style="text-align:right"
+                                  width="100"/>
+                        <extPanel name="panel19" border="false" colspan="" tag="" style="" padding="" width="" left=""
+                                  top="" margin="" layout="table" columns="4" defaults="style:'margin:1 0 0 0'">
+                            <extNumber name="number_monthfee_from" caption="caption" margin="" width="60"
+                                       allowNegative="false"/>
+                            <extLabel name="extLabel71" caption="至" class=""/>
+                            <extNumber name="number_monthfee_to" caption="caption" margin="" width="60"
+                                       allowNegative="false"/>
+                            <extLabel name="extLabel291" caption="（元）"/>
+                        </extPanel>
+                        <extLabel name="extLabel28" caption="收费周期：" style="text-align:right" width="100"
+                                  class="sys_normal"/>
+                        <extPanel name="panel29" border="false">
+                            <extComboBox name="combo_month_fee_type" mode="local" query="query_month_fee_type"
+                                         onBlur="if (control.el.dom.value == '')&#xA;control.setValue('');"
+                                         emptyText="--请选择--" forceSelection="true"/>
+                        </extPanel>
+                        <extLabel name="extLabel32" caption="{#startDateLabel#}：" width="100" class="sys_normal"
+                                  style="text-align:right"/>
+                        <extPanel name="panel34" border="false" layout="table" columns="3"
+                                  defaults="style:'margin:1 0 0 0'">
+                            <extDate name="plan_startdate_from" caption="caption" format="Y-m-d"/>
+                            <extLabel name="extLabel33" caption="至"/>
+                            <extDate name="plan_startdate_to" caption="caption" format="Y-m-d"/>
+                        </extPanel>
+                        <extLabel name="extLabel34" caption="{#endDateLabel#}：" width="100" class="sys_normal"
+                                  style="text-align:right"/>
+                        <extPanel name="panel35" border="false" layout="table" columns="3"
+                                  defaults="style:'margin:1 0 0 0'">
+                            <extDate name="plan_enddate_from" caption="caption" format="Y-m-d"/>
+                            <extLabel name="extLabel35" caption="至"/>
+                            <extDate name="plan_enddate_to" caption="caption" format="Y-m-d"/>
+                        </extPanel>
+                    </extFieldSet>
+                </extPanel>
+
+            </extPanel>
+            <extGrid name="grid_result" columnsModel="columnModel_result_grid" tbar="grid_menu" store="grid_store"
+                     height="340" width="" anchor="98%" pageSize="10" loadStore="false" bodyStyle="" caption="查询结果"
+                     tag="" autoExpandColumn="column9"/>
+        </extPanel>
+    </extViewPort>
+    <extScript name="events"
+               last="grid_result.on('rowdblclick',function(grid,rowIndex,e){&#xA;var ids = getGridSelectValues('grid_result',0);&#xA;var planTypeIds=getGridSelectValues('grid_result',17);&#xA;if (ids == null || ids.length == 0){&#xA;		return;&#xA;	}else if (ids.length &gt; 1){&#xA;		Ext.MessageBox.alert('错误','每次只能编辑一条数据！');&#xA;		return;&#xA;	}else{&#xA;		var id = ids[0];&#xA;		var planTypeId=planTypeIds[0];&#xA; 		var viewUrl= '{#sys.contextPath#}/plananalysis/paListAction.pado?actionType=toEditPmpPlan&amp;readOnly=true&amp;id='+id+'&amp;planTypeId='+planTypeId;&#xA; 		var editUrl= '{#sys.contextPath#}/Main?file=WebBuilder/xml/pmp/pmpPlanInfo.xml&amp;from=edit&amp;id='+id+'&amp;planTypeId='+planTypeId;&#xA;                if (currentUserId !=''){&#xA;			var userIds = getGridSelectValues('grid_result',16);&#xA;			var userId = userIds[0];&#xA;			if (userId !=null &amp;&amp; userId!='' &amp;&amp; userId !=undefined){&#xA;				if (currentUserId != userId){&#xA;					window.location.href=viewUrl;&#xA;				}else{&#xA;					/*anjx 新增 当有审批时需要对一些操作进行限制*/&#xA;					if (needApprove.toLowerCase()=='on'){&#xA;						var status = getGridSelectValues('grid_result',15);&#xA;						status = status[0];&#xA;						if (status !=null &amp;&amp; status !=undefined){&#xA;							if (status == APPROVE_STATUS_PENDING || status == APPROVE_STATUS_PASS){&#xA;								window.location.href=viewUrl;&#xA;							}else{&#xA;								window.location.href=editUrl;&#xA;							}&#xA;						}else{&#xA;							window.location.href=editUrl;&#xA;						}&#xA;					}else{&#xA;						window.location.href=editUrl;&#xA;					}&#xA;				}&#xA;			} else {&#xA;				window.location.href=viewUrl;&#xA;			}&#xA;		}else{&#xA;			/*anjx 新增 当有审批时需要对一些操作进行限制*/&#xA;			if (needApprove.toLowerCase()=='on'){&#xA;				var status = getGridSelectValues('grid_result',15);&#xA;				status = status[0];&#xA;				if (status !=null &amp;&amp; status !=undefined){&#xA;					if (status == APPROVE_STATUS_PENDING || status == APPROVE_STATUS_PASS){&#xA;						window.location.href=viewUrl;&#xA;					}else{&#xA;						window.location.href=editUrl;&#xA;					}&#xA;				}else{&#xA;					window.location.href=editUrl;&#xA;				}&#xA;			}else{&#xA;				window.location.href=editUrl;&#xA;			}&#xA;			&#xA;  		}&#xA;}});&#xA;comboTree_packet__tree.on('checkchange',function(n){&#xA;var str = getComboTreeCheckText(n.getOwnerTree());&#xA;Ext.getCmp('comboTree_packet').setValue(str);&#xA;});"/>
+    <extScript name="init" footer=""
+               last="Ext.onReady(function(){&#xA;addCombosUnlimit();&#xA;var con = '{#chartCon#}';&#xA;if (con!=null &amp;&amp; con.length&gt;0){&#xA;chart_con.setValue(con);&#xA;queryPmpPlanByChart();&#xA;}else{&#xA;combo_plan_type.setValue(1);&#xA;/*如果是编辑时返回，则查上次查询过的数据*/&#xA;if ('{#from#}'=='edit'){&#xA;grid_result.getStore().load({params:{start:0,limit:10}});&#xA;}else{&#xA;queryPmpPlanByCon();&#xA;}&#xA;}&#xA;/*初始化时隐藏后两个增值业务条件*/&#xA;fieldSet_newbusi_con1.setVisible(false);&#xA;fieldSet_newbusi_con2.setVisible(false);&#xA;/*初始化时隐藏后两个语音业务条件*/&#xA;fieldSet_voice_con1.setVisible(false);&#xA;fieldSet_voice_con2.setVisible(false);&#xA;&#xA;&#xA;&#xA;var i =10;&#xA;Ext.getCmp('panel'+i).hide();&#xA;&#xA;store_city.load();&#xA;store_plan_series.load();&#xA;&#xA;/*审批相关*/&#xA;if (needApprove.toLowerCase()!='on'){&#xA;/*这里按位置来的，需要适时调整*/&#xA;columnModel_result_grid.setHidden(15,true);&#xA;}&#xA;});"/>
+</body>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--配置以下两个参数， 关联对象被get时，才被加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="true"/>
+
+    </settings>
+    <plugins>
+        <!--分页插件-->
+        <plugin interceptor="com.asiainfo.dbx.ln.component.dao.mybatis.PaginationInterceptor"></plugin>
+
+    </plugins>
+</configuration>

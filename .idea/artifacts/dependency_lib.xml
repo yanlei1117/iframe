@@ -1,0 +1,68 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="dependency_lib">
+    <output-path>$PROJECT_DIR$/deploy/lib</output-path>
+    <root id="root">
+      <element id="library" level="project" name="Maven: cglib:cglib:3.1" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-core:4.0.5.RELEASE" />
+      <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-all:1.3" />
+      <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
+      <element id="library" level="project" name="Maven: ch.qos.logback:logback-access:1.1.2" />
+      <element id="library" level="project" name="Maven: org.quartz-scheduler:quartz:1.8.6" />
+      <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.7" />
+      <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.8.1" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-test:4.0.5.RELEASE" />
+      <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.8.1" />
+      <element id="library" level="project" name="Maven: joda-time:joda-time:2.1" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.0.5.RELEASE" />
+      <element id="library" level="project" name="Maven: org.mockito:mockito-all:1.9.5" />
+      <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.9" />
+      <element id="library" level="project" name="Maven: org.mybatis.generator:mybatis-generator-core:1.3.2" />
+      <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
+      <element id="library" level="project" name="Maven: javax.mail:mail:1.4.1" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-context:4.0.5.RELEASE" />
+      <element id="library" level="project" name="Maven: org.mvel:mvel2:2.1.9.Final" />
+      <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.4.1" />
+      <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.6" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-context-support:4.0.5.RELEASE" />
+      <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.4.1" />
+      <element id="library" level="project" name="Maven: junit:junit:4.11" />
+      <element id="library" level="project" name="Maven: org.ow2.asm:asm:4.2" />
+      <element id="library" level="project" name="Maven: javassist:javassist:3.11.0.GA" />
+      <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.2.7" />
+      <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:1.2.2" />
+      <element id="library" level="project" name="Maven: commons-net:commons-net:3.3" />
+      <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.1.2" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.0.5.RELEASE" />
+      <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.1" />
+      <element id="library" level="project" name="Maven: org.apache.commons:commons-email:1.2" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-web:4.0.5.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.0.5.RELEASE" />
+      <element id="library" level="project" name="Maven: ognl:ognl:3.0.8" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.0.5.RELEASE" />
+      <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-core:1.3" />
+      <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.30" />
+      <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.1.2" />
+      <element id="library" level="project" name="Maven: c3p0:c3p0:0.9.1" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.0.5.RELEASE" />
+      <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.2" />
+      <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
+      <element id="library" level="project" name="Maven: commons-dbcp:commons-dbcp:1.4" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-orm:4.0.5.RELEASE" />
+      <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
+      <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.1.3" />
+      <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.3.2" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.0.5.RELEASE" />
+      <element id="library" level="project" name="Maven: commons-pool:commons-pool:1.5.4" />
+      <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-io:8.1.15.v20140411" />
+      <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-security:8.1.15.v20140411" />
+      <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-webapp:8.1.15.v20140411" />
+      <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-server:8.1.15.v20140411" />
+      <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-util:8.1.15.v20140411" />
+      <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-xml:8.1.15.v20140411" />
+      <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-http:8.1.15.v20140411" />
+      <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-servlet:8.1.15.v20140411" />
+      <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-continuation:8.1.15.v20140411" />
+      <element id="library" level="project" name="Maven: org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016" />
+    </root>
+  </artifact>
+</component>

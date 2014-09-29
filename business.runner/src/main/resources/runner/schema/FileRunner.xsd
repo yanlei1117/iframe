@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://com.asiainfo.dbx.ln/file" xmlns:tns="http://com.asiainfo.dbx.ln/file" elementFormDefault="qualified">
+
+    <element name="listFile">
+        <complexType>
+            <attribute name="localPath" type="string" use="required"></attribute>
+            <attribute name="localFileNameRegex" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" ></attribute>
+        </complexType>
+    </element>
+
+    <element name="deleteFile">
+        <complexType>
+            <attribute name="localPath" type="string" use="required"></attribute>
+            <attribute name="localFileNameRegex" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" ></attribute>
+        </complexType>
+    </element>
+
+    <element name="deleteDir">
+        <complexType>
+            <attribute name="localPath" type="string" use="required"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" ></attribute>
+        </complexType>
+    </element>
+
+
+    <element name="renameFile">
+        <complexType>
+            <attribute name="localPath" type="string" use="required"></attribute>
+            <attribute name="localFileNameRegex" type="string"></attribute>
+            <attribute name="destFileNameRegex" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" ></attribute>
+        </complexType>
+    </element>
+
+    <element name="renameDir">
+        <complexType>
+            <attribute name="localPath" type="string" use="required"></attribute>
+            <attribute name="destDirName" type="string"></attribute>
+
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" ></attribute>
+        </complexType>
+    </element>
+
+    <element name="moveFile">
+        <complexType>
+            <attribute name="localPath" type="string" use="required"></attribute>
+            <attribute name="localFileNameRegex" type="string"></attribute>
+            <attribute name="destLocalPath" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" ></attribute>
+        </complexType>
+    </element>
+
+    <element name="moveDir">
+        <complexType>
+            <attribute name="localPath" type="string" use="required"></attribute>
+            <attribute name="destLocalPath" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" ></attribute>
+        </complexType>
+    </element>
+
+    <element name="zipFile">
+        <complexType>
+            <attribute name="localPath" type="string" use="required"></attribute>
+            <attribute name="localFileNameRegex" type="string"></attribute>
+            <attribute name="zipFilePath" type="string"></attribute>
+            <attribute name="zipFileName" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" ></attribute>
+        </complexType>
+    </element>
+
+    <element name="zipDir">
+        <complexType>
+            <attribute name="localPath" type="string" use="required"></attribute>
+            <attribute name="localFileNameRegex" type="string"></attribute>
+            <attribute name="zipFilePath" type="string"></attribute>
+            <attribute name="zipFileName" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" ></attribute>
+        </complexType>
+    </element>
+
+    <element name="unZipFile">
+        <complexType>
+            <attribute name="localPath" type="string" use="required"></attribute>
+            <attribute name="zipFileName" type="string"></attribute>
+            <attribute name="destLocalPath" type="string"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="defineName" type="string" ></attribute>
+        </complexType>
+    </element>
+
+
+
+</schema>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://com.asiainfo.dbx.ln/procedure" xmlns:tns="http://com.asiainfo.dbx.ln/procedure" elementFormDefault="qualified">
+    <element name="procedures" >
+        <complexType>
+            <sequence minOccurs="0" maxOccurs="unbounded">
+                <element ref="tns:procedure"/>
+            </sequence>
+
+        </complexType>
+    </element>
+
+    <element name="procedure" >
+        <complexType>
+            <sequence minOccurs="0" maxOccurs="unbounded">
+                <any/>
+            </sequence>
+
+            <attribute name="repository" type="string" use="required"></attribute>
+            <attribute name="container" type="string" use="required"></attribute>
+            <attribute name="name" type="string" use="required"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+            <attribute name="returnVarName" type="string"></attribute>
+            <attribute name="returnVarInitVar" type="string"></attribute>
+            <attribute name="paramsMapVarName" type="string"></attribute>
+            <attribute name="paramsMapKeys" type="string"></attribute>
+
+        </complexType>
+    </element>
+    <element name="define">
+        <complexType>
+            <attribute name="varName" type="string" use="required"/>
+            <attribute name="varValue" type="string" use="required"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+        </complexType>
+    </element>
+
+    <element name="forEach">
+        <complexType>
+            <sequence minOccurs="0" maxOccurs="unbounded">
+                <any/>
+            </sequence>
+            <attribute name="collection" type="string" use="required"/>
+            <attribute name="item" type="string" use="required"/>
+            <attribute name="desc" type="string" use="required"></attribute>
+        </complexType>
+
+    </element>
+
+    <element name="logicTrue">
+        <complexType>
+            <sequence minOccurs="0" maxOccurs="unbounded">
+                <any/>
+            </sequence>
+            <attribute name="expression" type="string" use="required"></attribute>
+            <attribute name="callProcedureName" type="string"  ></attribute>
+            <attribute name="callProcedureParams" type="string"  ></attribute>
+            <attribute name="callProcedureResultName" type="string" ></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+        </complexType>
+    </element>
+
+    <element name="logicFalse">
+        <complexType>
+            <sequence minOccurs="0" maxOccurs="unbounded">
+                <any/>
+            </sequence>
+            <attribute name="expression" type="string" use="required"></attribute>
+            <attribute name="callProcedureName" type="string" ></attribute>
+            <attribute name="callProcedureParams" type="string"  ></attribute>
+            <attribute name="callProcedureResultName" type="string"  ></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+        </complexType>
+    </element>
+
+    <element name="case">
+        <complexType>
+            <sequence minOccurs="0" maxOccurs="unbounded">
+                <element ref="tns:when" minOccurs="1" maxOccurs="unbounded"/>
+                <element ref="tns:else" minOccurs="0" maxOccurs="1"/>
+            </sequence>
+            <attribute name="execute" type="string" ></attribute>
+            <attribute name="defineName" type="string" ></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+        </complexType>
+    </element>
+
+    <element name="when">
+        <complexType>
+            <sequence minOccurs="0" maxOccurs="unbounded">
+                <any/>
+            </sequence>
+            <attribute name="expression" type="string" use="required"></attribute>
+            <attribute name="callProcedureName" type="string"  ></attribute>
+            <attribute name="callProcedureParams" type="string" ></attribute>
+            <attribute name="callProcedureResultName" type="string" ></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+        </complexType>
+    </element>
+
+    <element name="else">
+        <complexType>
+            <sequence minOccurs="0" maxOccurs="unbounded">
+                <any/>
+            </sequence>
+            <attribute name="expression" type="string" use="required"></attribute>
+            <attribute name="callProcedureName" type="string"  ></attribute>
+            <attribute name="callProcedureParams" type="string"  ></attribute>
+            <attribute name="callProcedureResultName" type="string" ></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+        </complexType>
+    </element>
+
+    <element name="callProcedure">
+        <complexType>
+            <attribute name="procedureName" type="string" use="required"></attribute>
+            <attribute name="paramsName" type="string" ></attribute>
+            <attribute name="defineName" type="string"   ></attribute>
+            <attribute name="repository" type="string" use="required"></attribute>
+            <attribute name="container" type="string" use="required"></attribute>
+            <attribute name="desc" type="string" use="required"></attribute>
+        </complexType>
+
+    </element>
+</schema>

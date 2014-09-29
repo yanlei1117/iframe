@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!-- 启用spring mvc 注解 -->
+    <context:annotation-config />
+
+    <!-- 设置使用注解的类所在的jar包 -->
+     
+    <context:component-scan base-package="com.asiainfo.dbx.ln.component.transport"></context:component-scan>
+    <!--
+    <bean name="jsonRestfulController" class="com.asiainfo.dbx.ln.component.transport.rest.JsonRestfulController">
+
+    </bean>
+-->
+    <!--Spring3.1开始的注解 HandlerMapping -->
+    <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+    <!--Spring3.1开始的注解 HandlerAdapter -->
+    <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+
+
+</beans>

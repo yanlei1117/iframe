@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="etc_config">
+    <output-path>$PROJECT_DIR$/deploy/etc/common</output-path>
+    <root id="root">
+      <element id="dir-copy" path="$PROJECT_DIR$/component.config/src/main/resources" />
+    </root>
+  </artifact>
+</component>

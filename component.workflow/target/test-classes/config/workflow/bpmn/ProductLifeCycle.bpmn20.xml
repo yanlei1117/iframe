@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xmlns:activiti="http://activiti.org/bpmn"
+			 xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+			 xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+			 xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+			 typeLanguage="http://www.w3.org/2001/XMLSchema"
+			 expressionLanguage="http://www.w3.org/1999/XPath"
+			 targetNamespace="http://www.activiti.org/product">
+
+
+  <process id="productLifeCycle" name="产品生产流程" isExecutable="true">
+    <extensionElements>
+
+        <activiti:executionListener event="start" class="com.asiainfo.dbx.ln.component.workflow.activiti.ExecutionListener.ExecutionCreateListner">
+        </activiti:executionListener>
+
+    </extensionElements>
+    
+    <startEvent id="starProductCycle" name="产品流程开始"></startEvent>
+    <userTask id="requriementRequest" name="产品需求录入">
+    		<extensionElements>
+      			<activiti:taskListener event="create"   class="com.asiainfo.dbx.ln.component.workflow.activiti.tasklistener.NoResultTaskListener"/>
+      		</extensionElements>
+    </userTask>
+    
+    <userTask id="requriementAudit" name="产品需求审批">
+    		<extensionElements>
+      			<activiti:taskListener event="create"   class="com.asiainfo.dbx.ln.component.workflow.activiti.tasklistener.ResultTaskListener"/>
+      		</extensionElements>
+    </userTask>
+   
+    <exclusiveGateway id="judgerequriementAuditResult" name="需求审批结果判断"></exclusiveGateway>
+    
+    <callActivity id="callTaskDispatch" name="递归调用任务派发"  calledElement="taskDispatch">
+
+    </callActivity>
+
+    <userTask id="productSaleApply" name="产品上市申请">
+    		<extensionElements>
+      			<activiti:taskListener event="create"   class="com.asiainfo.dbx.ln.component.workflow.activiti.tasklistener.NoResultTaskListener"/>
+      		</extensionElements>
+    </userTask>
+    <userTask id="productSaleApprove" name="产品上市审批">
+    	<extensionElements>
+      			<activiti:taskListener event="create"   class="com.asiainfo.dbx.ln.component.workflow.activiti.tasklistener.ResultTaskListener"/>
+      		</extensionElements>
+    </userTask>
+   
+    <exclusiveGateway id="JudgeSaleProductResult" name="上市审批结果判断"></exclusiveGateway>
+    
+    <endEvent id="endevent3" name="产品流程结束"></endEvent>
+    
+    <sequenceFlow id="flow1" name="开始->产品需求录入" sourceRef="starProductCycle" targetRef="requriementRequest"></sequenceFlow>
+     <sequenceFlow id="requriementSubmit" name="产品需求录入->产品需求审批" sourceRef="requriementRequest" targetRef="requriementAudit"></sequenceFlow>
+     <sequenceFlow id="flow3" name="产品需求审批->审批结果判断" sourceRef="requriementAudit" targetRef="judgerequriementAuditResult"></sequenceFlow>
+    <sequenceFlow id="requriementAuditFail" name="审批结果判断->失败->产品需求录入" sourceRef="judgerequriementAuditResult" targetRef="requriementRequest">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${result==false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow58" name="审批结果判断->成功->任务派发子流程" sourceRef="judgerequriementAuditResult" targetRef="callTaskDispatch">
+     <conditionExpression xsi:type="tFormalExpression"><![CDATA[${result==true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow62" name="任务派发子流程->完成->产品上市申请" sourceRef="callTaskDispatch" targetRef="productSaleApply"></sequenceFlow>
+    <sequenceFlow id="flow11" name="产品上市申请->产品上市审批" sourceRef="productSaleApply" targetRef="productSaleApprove"></sequenceFlow>
+    <sequenceFlow id="flow12" name="产品上市审批->上市审批结果判断" sourceRef="productSaleApprove" targetRef="JudgeSaleProductResult"></sequenceFlow>
+    
+    <sequenceFlow id="flow30" name="上市审批结果判断->成功->结束" sourceRef="JudgeSaleProductResult" targetRef="endevent3">
+    	<conditionExpression xsi:type="tFormalExpression"><![CDATA[${result==true}]]></conditionExpression>
+    </sequenceFlow>
+
+	<sequenceFlow id="flow31" name="上市审批结果判断->失败->产品上市申请" sourceRef="JudgeSaleProductResult" targetRef="productSaleApply">
+    	<conditionExpression xsi:type="tFormalExpression"><![CDATA[${result==false}]]></conditionExpression>
+    </sequenceFlow>
+    
+  
+   
+   
+    
+  </process>
+  
+ 
+</definitions>

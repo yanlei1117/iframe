@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<procedures xmlns="http://com.asiainfo.dbx.ln/procedure"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:ftp="http://com.asiainfo.dbx.ln/ftp"
+          xmlns:das="http://com.asiainfo.dbx.ln/das"
+          xmlns:file="http://com.asiainfo.dbx.ln/file"
+          xsi:schemaLocation="http://com.asiainfo.dbx.ln/procedure http://com.asiainfo.dbx.ln/runner/schema/ProcedureRunner.xsd
+                             http://com.asiainfo.dbx.ln/ftp http://com.asiainfo.dbx.ln/runner/schema/FtpRunner.xsd
+                             http://com.asiainfo.dbx.ln/das http://com.asiainfo.dbx.ln/runner/schema/DasRunner.xsd
+                             http://com.asiainfo.dbx.ln/file http://com.asiainfo.dbx.ln/runner/schema/FileRunner.xsd">
+
+      <procedure name="testFtp" desc="196上/deploy目录下的rar文件同步到14测试机/deploy下" repository="lnbi" container="test">
+          <ftp:ftpGetAllFile serverId="ftpServer_10.65.9.196" serverPath="/deploy" serverFileNameRegex=".*\.rar"  localPath="D:\temp\download" desc="从196上\deploy目录下载rar文件" defineName="downloadFiles"/>
+          <logicTrue expression="@{downloadFiles.size>0}" desc="成功下载了文件？">
+              <file:zipFile localPath="D:\temp\download" localFileNameRegex=".*\.rar" zipFilePath="D:\temp\download" zipFileName="all.zip" desc="压缩本地文件"/>
+              <ftp:ftpPutAllFile serverId="ftpServer_192.168.169.14" serverPath="/data/ailn/deploy" localPath="D:\temp\download"  localFileNameRegex=".*\.zip"     desc="下载的文件再上传到14测试机"/>
+              <file:deleteFile localPath="D:\temp\download" localFileNameRegex=".*\.rar"  desc="删除本地文件"/>
+          </logicTrue>
+      </procedure>
+
+    <!--
+       <ftp:ftpGetAllFile serverId="1" serverPath="2" localPath="3" desc="4" />
+
+       -->
+</procedures>
